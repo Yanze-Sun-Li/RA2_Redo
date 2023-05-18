@@ -73,6 +73,8 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    //______________________玩家鼠标左键相关的代码____________________________________________
+
     /// <summary>
     /// 鼠标左键事件结束。
     /// </summary>
@@ -211,6 +213,7 @@ public class PlayerControl : MonoBehaviour
     private void LeftSingleClickAction()
     {
         // Debug.log("检测到鼠标左键单击。");
+        UnitMoving();
     }
     /// <summary>
     /// 鼠标左键双击事件被检测到的时候
@@ -232,8 +235,19 @@ public class PlayerControl : MonoBehaviour
     {
         BoxSelecting();
     }
-
-
+    //______________________玩家鼠标右键相关的代码____________________________________________
+    /// <summary>
+    /// 由于开发者的极度懒惰行为，目前只检测右键单击行为。
+    /// </summary>
+    void RightMouseActions() {
+        if (Input.GetMouseButtonDown(1))
+        {
+            RightSingleClickAction();
+        }
+    }
+    private void RightSingleClickAction() {
+        playerSelectedUnits.Clear();
+    }
     //______________________框选功能的代码____________________________________________
     [SerializeField]
     Vector3 eventClickPosition;
@@ -376,7 +390,31 @@ public class PlayerControl : MonoBehaviour
         return new Rect(min.x, Screen.height - max.y, max.x - min.x, max.y - min.y);
     }
 
+    //—————————————————————————————————————————————————————— 左键行为 ——————————————————————————————————————————
+    private void UnitMoving() {
+        foreach (UnitControl item in playerSelectedUnits)
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 检测到地面命中
+                if (hit.collider.CompareTag("Ground"))
+                {
+                    Vector3 groundPosition = hit.point;
+                    // 在这里处理地面命中的位置
+                    item.MoveToWardTarget(groundPosition);
+                    Debug.Log("Object trying to move: " + item.gameObject.name + " Destination: " + groundPosition);
+                }
+            }
+
+            
+            
+        }
+    }
+
+    //—————————————————————————————————————————————————————— 右键行为 ——————————————————————————————————————————
     //—————————————————————————————————————————————————————— Unity 方法 ——————————————————————————————————————————
 
     private void Start()
@@ -392,7 +430,7 @@ public class PlayerControl : MonoBehaviour
     {
         LeftMouseActions();
         LeftMouseActionsTimer();
-
+        RightMouseActions();
     }
 
     private void OnGUI()
