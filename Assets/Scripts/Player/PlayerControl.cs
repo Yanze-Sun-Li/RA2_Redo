@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour
 
     float timeHoldingRecord = -1;
     [SerializeField]
-    private float timeLimitation_Holding = .1f;
+    private float timeLimitation_Holding = .2f;
 
     /// <summary>
     /// 当前左键鼠标事件的计时器，正在进行的事件是否超时？
