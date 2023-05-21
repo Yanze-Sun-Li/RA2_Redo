@@ -11,6 +11,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerControl : MonoBehaviour
 {
+    
+
     //——————————————————————玩家所拥有的资源和属性等—————————————————————————————————————————————————————
     /* 注意：此处有待优化性能的需求！！ 
      * 使用List在完成的时候方便，但是在处理大量的单位的时候，使用List记录PlayerUnit会需要比Quadtree更多的性能。
@@ -20,6 +22,14 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField]
     private List<UnitControl> playerUnits;
+
+    /*
+     * ——————————————————————重要信息，玩家如何在出场时正确判断自己的部队——————————————————————————————————————————
+     * 每一位PlayerControl都应该有一个独属于玩家的ID。在游戏开始的时候，会访问场上所有的单位，并根据玩家的ID将单位加入到对应玩家的阵营里。
+     * 目前在草案中预设中立单位的playerID为0，请保持玩家的ID从1起步。
+     */
+    [SerializeField]
+    public int playerID = -1;
     
     [Header("Debug信息")]
     [SerializeField]
@@ -73,7 +83,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //______________________玩家鼠标左键相关的代码____________________________________________
+    //______________________玩家鼠标左键检测相关的代码____________________________________________
 
     /// <summary>
     /// 鼠标左键事件结束。
@@ -213,7 +223,47 @@ public class PlayerControl : MonoBehaviour
     private void LeftSingleClickAction()
     {
         // Debug.log("检测到鼠标左键单击。");
-        UnitMoving();
+
+        if (playerSelectedUnits.Count == 0)
+        {
+            ResetHitValue();
+            UnitControl unit = ReturnHitUnit();
+            if (isHitUnit)
+            {
+                if (unit.playerID == playerID)
+                {
+                    playerSelectedUnits.Add(unit);
+                }
+            }
+        }
+        else if (playerSelectedUnits.Count > 0)
+        {
+            ResetHitValue();
+            //————————————————这个地方有进行优化的空间，但是由于时间关系，这里暂且先不做调整————————————————————
+            UnitControl unit = ReturnHitUnit();
+            Vector3 position = ReturnHitGroundPosition();
+            if (isHitUnit)
+            {
+                if (unit.playerID == playerID)
+                {
+                    //如果击中地面，要求目标移动到指定位置。
+                    UnitMoving();
+                }
+                else
+                {
+                    //Attack();
+                    Debug.Log("攻击指定目标！ " + unit.name);
+                }
+            }
+            else if (isHitGround)
+            {
+                UnitMoving();
+            }
+        }
+        else {
+            Debug.LogError("Player selected units amount should not under 0! 玩家已选择的单位数目不应该低于0！");
+        }
+
     }
     /// <summary>
     /// 鼠标左键双击事件被检测到的时候
@@ -235,19 +285,7 @@ public class PlayerControl : MonoBehaviour
     {
         BoxSelecting();
     }
-    //______________________玩家鼠标右键相关的代码____________________________________________
-    /// <summary>
-    /// 由于开发者的极度懒惰行为，目前只检测右键单击行为。
-    /// </summary>
-    void RightMouseActions() {
-        if (Input.GetMouseButtonDown(1))
-        {
-            RightSingleClickAction();
-        }
-    }
-    private void RightSingleClickAction() {
-        playerSelectedUnits.Clear();
-    }
+
     //______________________框选功能的代码____________________________________________
     [SerializeField]
     Vector3 eventClickPosition;
@@ -259,40 +297,6 @@ public class PlayerControl : MonoBehaviour
     public LayerMask unitLayer; // 单位的图层
     [SerializeField]
 
-
-    /// <summary>
-    /// 返回当前鼠标位置在游戏的世界内代表的Vector3 Postion位置数值。
-    /// 注意：不是屏幕上鼠标位置，而是游戏世界内此时鼠标所指位置。
-    /// </summary>
-    /// <returns></returns>
-    Vector3 ReturnHitPosition() {
-        Vector3 clickPosition = new Vector3(0f,0f,0f);
-        // 创建一条从鼠标点击位置向屏幕发射的射线
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        // 检测射线是否与地面碰撞
-        if (Physics.Raycast(ray, out hit))
-        {
-            // 检查是否点击到带有"Ground"标签的物体
-            if (hit.collider.CompareTag("Ground")) {
-
-                // 获取碰撞点的坐标
-                clickPosition = hit.point;
-
-                // 在这里可以对点击位置进行处理
-                // 例如在该位置创建单位或进行其他操作
-                // Debug.log("Clicked position: " + clickPosition);
-                return clickPosition;
-            }
-            //else { 
-            
-            //}
-        }
-
-        return Vector3.zero;
-        
-    }
     /// <summary>
     /// 记录下鼠标抬起时候，鼠标停留的位置
     /// </summary>
@@ -413,8 +417,136 @@ public class PlayerControl : MonoBehaviour
             
         }
     }
-
     //—————————————————————————————————————————————————————— 右键行为 ——————————————————————————————————————————
+    
+    //______________________玩家鼠标右键检测相关的代码____________________________________________
+    /// <summary>
+    /// 由于开发者的极度懒惰行为，目前只检测右键单击行为。
+    /// </summary>
+    void RightMouseActions()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            RightSingleClickAction();
+        }
+    }
+
+    //———————————鼠标右键的事件方法————————————————————————————
+    /// <summary>
+    /// 当检测到鼠标右键活动之后，激活该方法。
+    /// </summary>
+    private void RightSingleClickAction()
+    {
+        playerSelectedUnits.Clear();
+    }
+
+
+    //———————————————————————————————————————————————————————与其他物体的组件进行沟通的公共方法————————————————————————————————————
+    public void AddUnit(UnitControl unit) 
+    { 
+        playerUnits.Add(unit);
+    }
+
+    //—————————————————————————————————————————————————获取当前鼠标的目标—————————————————————————————————————
+    /*
+     * 我认为一下的Hit系列功能可以优化，整合成为单独一个判断方法。 如果整合之后，左键的单击判断敌人，地面和友军的逻辑也可以进行优化。
+     * 但是因为时间的问题，作者将暂时不对这里进行优化修改。
+     */
+    
+    //判断目标的种类。
+    bool isHitGround = false;
+    bool isHitUnit = false;
+    bool isHitBuilding = false;
+    /// <summary>
+    /// 返回当前鼠标位置在游戏的世界内代表的Vector3 Postion位置数值。
+    /// 注意：不是屏幕上鼠标位置，而是游戏世界内此时鼠标所指位置。 
+    /// 注意：如果集中地面，isHitGround会显示为True
+    /// </summary>
+    /// <returns>当前鼠标在游戏世界里的地面位置</returns>
+    Vector3 ReturnHitGroundPosition()
+    {
+        Vector3 clickPosition = new Vector3(0f, 0f, 0f);
+        // 创建一条从鼠标点击位置向屏幕发射的射线
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // 检测射线是否与地面碰撞
+        if (Physics.Raycast(ray, out hit))
+        {
+            // 检查是否点击到带有"Ground"标签的物体
+            if (hit.collider.CompareTag("Ground"))
+            {
+
+                // 获取碰撞点的坐标
+                clickPosition = hit.point;
+
+                //判断鼠标的位置在地面上
+                isHitGround= true;
+
+                // 在这里可以对点击位置进行处理
+                // 例如在该位置创建单位或进行其他操作
+                // Debug.log("Clicked position: " + clickPosition);
+                return clickPosition;
+            }
+            //else { 
+
+            //}
+        }
+
+        return Vector3.zero;
+
+    }
+
+    /// <summary>
+    /// 返回当前鼠标位置在游戏的世界内代表的Vector3 Postion位置数值。
+    /// 注意：不是屏幕上鼠标位置，而是游戏世界内此时鼠标所指位置。 
+    /// 注意：如果集中地面，isHitGround会显示为True
+    /// </summary>
+    /// <returns>当前鼠标在游戏世界里的地面位置</returns>
+    UnitControl ReturnHitUnit()
+    {
+        UnitControl unit;
+        // 创建一条从鼠标点击位置向屏幕发射的射线
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // 检测射线是否与地面碰撞
+        if (Physics.Raycast(ray, out hit))
+        {
+            // 检查是否点击到带有"Ground"标签的物体
+            if (hit.collider.CompareTag("Units"))
+            {
+
+                // 获取碰撞点的坐标
+                unit = hit.collider.gameObject.GetComponent<UnitControl>();
+
+                //判断鼠标的位置在地面上
+                isHitUnit = true;
+
+                // 在这里可以对点击位置进行处理
+                // 例如在该位置创建单位或进行其他操作
+                // Debug.log("Clicked position: " + clickPosition);
+                return unit;
+            }
+            //else { 
+
+            //}
+        }
+
+        return null;
+
+    }
+
+    
+    /// <summary>
+    /// 重置击中判断变量为初始false状态。
+    /// </summary>
+    private void ResetHitValue() 
+    {
+        isHitBuilding = false;
+        isHitGround= false;
+        isHitUnit= false;
+    }
     //—————————————————————————————————————————————————————— Unity 方法 ——————————————————————————————————————————
 
     private void Start()

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4452891058592484309}
   m_Layer: 0
   m_Name: HuiXiong
-  m_TagString: Untagged
+  m_TagString: Units
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd02c4bd210ecab438ab6c864163c9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  playerID: 0
+  name: 
+  tag: 
 --- !u!195 &4452891058592484311
 NavMeshAgent:
   m_ObjectHideFlags: 0
