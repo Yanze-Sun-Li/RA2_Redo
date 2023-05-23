@@ -130,10 +130,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_Name
       value: HuiXiong (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
@@ -207,6 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
+      propertyPath: m_Speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
       propertyPath: m_Radius
       value: 1.74
       objectReference: {fileID: 0}
@@ -223,9 +238,11 @@ PrefabInstance:
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4452891058592484308, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}
 --- !u!1 &24388986
 GameObject:
@@ -415,30 +432,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
-      propertyPath: m_Radius
-      value: 1.74
+      propertyPath: m_Speed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: m_Acceleration
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
-        type: 3}
-      propertyPath: m_AngularSpeed
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455727, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
-        type: 3}
-      propertyPath: id
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455727, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: playerID
       value: 1
@@ -693,7 +695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &376940718
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -707,7 +709,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 3
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -732,6 +734,9 @@ MonoBehaviour:
   playerID: 0
   name: 
   tag: 
+  normalSpeed: 0
+  enableRotateBeforeMove: 0
+  rotationThreshold: 1
 --- !u!135 &376940720
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1111,8 +1116,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455721, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034816026108455721, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
       propertyPath: m_TagString
       value: Units
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
+      propertyPath: m_Speed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
@@ -1122,7 +1137,7 @@ PrefabInstance:
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: m_Acceleration
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
@@ -1132,16 +1147,16 @@ PrefabInstance:
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455727, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
-        type: 3}
-      propertyPath: id
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455727, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
+      propertyPath: enableRotateBeforeMove
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1395,7 +1410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &1078341830
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1409,7 +1424,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 3
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -1434,6 +1449,9 @@ MonoBehaviour:
   playerID: 0
   name: 
   tag: 
+  normalSpeed: 0
+  enableRotateBeforeMove: 0
+  rotationThreshold: 1
 --- !u!135 &1078341832
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1851,6 +1869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
       propertyPath: m_TagString
       value: Units
       objectReference: {fileID: 0}
@@ -1932,9 +1955,10 @@ PrefabInstance:
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4452891058592484308, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}
 --- !u!1 &1327952743
 GameObject:
@@ -2101,10 +2125,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_Name
       value: HuiXiong (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
@@ -2178,6 +2212,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
+      propertyPath: m_Speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
       propertyPath: m_Radius
       value: 1.74
       objectReference: {fileID: 0}
@@ -2194,9 +2233,11 @@ PrefabInstance:
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4452891058592484308, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}
 --- !u!1 &1529446195
 GameObject:
@@ -2332,7 +2373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &1592134771
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2346,7 +2387,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 3
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2371,6 +2412,9 @@ MonoBehaviour:
   playerID: 0
   name: 
   tag: 
+  normalSpeed: 0
+  enableRotateBeforeMove: 0
+  rotationThreshold: 1
 --- !u!135 &1592134773
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2524,7 +2568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &1946976469
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2538,7 +2582,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 3
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2563,6 +2607,9 @@ MonoBehaviour:
   playerID: 0
   name: 
   tag: 
+  normalSpeed: 0
+  enableRotateBeforeMove: 0
+  rotationThreshold: 1
 --- !u!135 &1946976471
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2641,6 +2688,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1949242384 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1162308816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1949242389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949242384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85bf0f12619f8745a25d85a7eb450e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  playerID: 0
+  name: 
+  tag: 
+  normalSpeed: 0
+  enableRotateBeforeMove: 1
+  rotationThreshold: 10
+  componentListOnTower: []
+  towerTurnValue: 1.4
 --- !u!1 &2112817684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,8 +2970,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455721, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034816026108455721, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
       propertyPath: m_TagString
       value: Units
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
+      propertyPath: m_Speed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
@@ -2907,7 +2991,7 @@ PrefabInstance:
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: m_Acceleration
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
@@ -2917,16 +3001,16 @@ PrefabInstance:
     - target: {fileID: 2034816026108455726, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455727, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
-        type: 3}
-      propertyPath: id
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2034816026108455727, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
       propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
+      propertyPath: enableRotateBeforeMove
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2938,10 +3022,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: playerID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_Name
       value: HuiXiong
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484306, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
@@ -3015,6 +3109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
+      propertyPath: m_Speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
       propertyPath: m_Radius
       value: 1.74
       objectReference: {fileID: 0}
@@ -3031,7 +3130,7 @@ PrefabInstance:
     - target: {fileID: 4452891058592484311, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: m_StoppingDistance
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73aa9aa78b93e0346960efd8a3e29ce7, type: 3}

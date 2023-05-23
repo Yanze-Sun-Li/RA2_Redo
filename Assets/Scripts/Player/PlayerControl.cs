@@ -86,7 +86,7 @@ public class PlayerControl : MonoBehaviour
     //______________________玩家鼠标左键检测相关的代码____________________________________________
 
     /// <summary>
-    /// 鼠标左键事件结束。
+    /// 当鼠标左键事件结束之后...
     /// </summary>
     private void EndLeftMouseActions()
     {
@@ -408,7 +408,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     Vector3 groundPosition = hit.point;
                     // 在这里处理地面命中的位置
-                    item.MoveToWardTarget(groundPosition);
+                    item.MoveToWardTargetTrigger(groundPosition);
                     Debug.Log("Object trying to move: " + item.gameObject.name + " Destination: " + groundPosition);
                 }
             }
