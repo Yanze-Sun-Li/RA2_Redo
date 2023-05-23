@@ -4,46 +4,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ½éÉÜ£º
-///     Ä¿Ç°ÓÃÓÚ¶ÔÍæ¼ÒµÄËùÓÐ²Ù×÷×ö³ö»ØÓ¦¡£
-/// ¹¦ÄÜ£º
-///     ¶ÁÈ¡Íæ¼ÒÊó±ê×ó¼üµã»÷£¬³¤°´£¬Ë«»÷
+/// ä»‹ç»ï¼š
+///     ç›®å‰ç”¨äºŽå¯¹çŽ©å®¶çš„æ‰€æœ‰æ“ä½œåšå‡ºå›žåº”ã€‚
+/// åŠŸèƒ½ï¼š
+///     è¯»å–çŽ©å®¶é¼ æ ‡å·¦é”®ç‚¹å‡»ï¼Œé•¿æŒ‰ï¼ŒåŒå‡»
 /// </summary>
 public class PlayerControl : MonoBehaviour
 {
     
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÍæ¼ÒËùÓµÓÐµÄ×ÊÔ´ºÍÊôÐÔµÈ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-    /* ×¢Òâ£º´Ë´¦ÓÐ´ýÓÅ»¯ÐÔÄÜµÄÐèÇó£¡£¡ 
-     * Ê¹ÓÃListÔÚÍê³ÉµÄÊ±ºò·½±ã£¬µ«ÊÇÔÚ´¦Àí´óÁ¿µÄµ¥Î»µÄÊ±ºò£¬Ê¹ÓÃList¼ÇÂ¼PlayerUnit»áÐèÒª±ÈQuadtree¸ü¶àµÄÐÔÄÜ¡£
-     * ÒòÎªµ±²éÕÒµÄÊ±ºò£¬listÍùÍù»áÐèÒªÀú¾­ÆäÖÐËùÓÐ´¢´æµÄplayerUnit
-     * ²»¹ýÓÉÓÚlistÓµÓÐ×Ô¼ºµÄÌØÉ«£¬Ò²¿ÉÒÔÔÚÄÚ´æ¿Õ¼ä×ã¹»µÄÇé¿öÏÂ£¬Í¬Ê±Ê¹ÓÃListºÍQuadtreeÀ´×öÁ½·Ý¼ÇÂ¼£¬ÒÔÓ¦¸¶²»Í¬×´¿öÏÂµÄÐèÇó¡£
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”çŽ©å®¶æ‰€æ‹¥æœ‰çš„èµ„æºå’Œå±žæ€§ç­‰â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+    /* æ³¨æ„ï¼šæ­¤å¤„æœ‰å¾…ä¼˜åŒ–æ€§èƒ½çš„éœ€æ±‚ï¼ï¼ 
+     * ä½¿ç”¨Liståœ¨å®Œæˆçš„æ—¶å€™æ–¹ä¾¿ï¼Œä½†æ˜¯åœ¨å¤„ç†å¤§é‡çš„å•ä½çš„æ—¶å€™ï¼Œä½¿ç”¨Listè®°å½•PlayerUnitä¼šéœ€è¦æ¯”Quadtreeæ›´å¤šçš„æ€§èƒ½ã€‚
+     * å› ä¸ºå½“æŸ¥æ‰¾çš„æ—¶å€™ï¼Œlistå¾€å¾€ä¼šéœ€è¦åŽ†ç»å…¶ä¸­æ‰€æœ‰å‚¨å­˜çš„playerUnit
+     * ä¸è¿‡ç”±äºŽlistæ‹¥æœ‰è‡ªå·±çš„ç‰¹è‰²ï¼Œä¹Ÿå¯ä»¥åœ¨å†…å­˜ç©ºé—´è¶³å¤Ÿçš„æƒ…å†µä¸‹ï¼ŒåŒæ—¶ä½¿ç”¨Listå’ŒQuadtreeæ¥åšä¸¤ä»½è®°å½•ï¼Œä»¥åº”ä»˜ä¸åŒçŠ¶å†µä¸‹çš„éœ€æ±‚ã€‚
      */
 
     [SerializeField]
     private List<UnitControl> playerUnits;
 
     /*
-     * ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÖØÒªÐÅÏ¢£¬Íæ¼ÒÈçºÎÔÚ³ö³¡Ê±ÕýÈ·ÅÐ¶Ï×Ô¼ºµÄ²¿¶Ó¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-     * Ã¿Ò»Î»PlayerControl¶¼Ó¦¸ÃÓÐÒ»¸ö¶ÀÊôÓÚÍæ¼ÒµÄID¡£ÔÚÓÎÏ·¿ªÊ¼µÄÊ±ºò£¬»á·ÃÎÊ³¡ÉÏËùÓÐµÄµ¥Î»£¬²¢¸ù¾ÝÍæ¼ÒµÄID½«µ¥Î»¼ÓÈëµ½¶ÔÓ¦Íæ¼ÒµÄÕóÓªÀï¡£
-     * Ä¿Ç°ÔÚ²Ý°¸ÖÐÔ¤ÉèÖÐÁ¢µ¥Î»µÄplayerIDÎª0£¬Çë±£³ÖÍæ¼ÒµÄID´Ó1Æð²½¡£
+     * â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”é‡è¦ä¿¡æ¯ï¼ŒçŽ©å®¶å¦‚ä½•åœ¨å‡ºåœºæ—¶æ­£ç¡®åˆ¤æ–­è‡ªå·±çš„éƒ¨é˜Ÿâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+     * æ¯ä¸€ä½PlayerControléƒ½åº”è¯¥æœ‰ä¸€ä¸ªç‹¬å±žäºŽçŽ©å®¶çš„IDã€‚åœ¨æ¸¸æˆå¼€å§‹çš„æ—¶å€™ï¼Œä¼šè®¿é—®åœºä¸Šæ‰€æœ‰çš„å•ä½ï¼Œå¹¶æ ¹æ®çŽ©å®¶çš„IDå°†å•ä½åŠ å…¥åˆ°å¯¹åº”çŽ©å®¶çš„é˜µè¥é‡Œã€‚
+     * ç›®å‰åœ¨è‰æ¡ˆä¸­é¢„è®¾ä¸­ç«‹å•ä½çš„playerIDä¸º0ï¼Œè¯·ä¿æŒçŽ©å®¶çš„IDä»Ž1èµ·æ­¥ã€‚
      */
     [SerializeField]
     public int playerID = -1;
     
-    [Header("DebugÐÅÏ¢")]
+    [Header("Debugä¿¡æ¯")]
     [SerializeField]
     private List<UnitControl> playerSelectedUnits;
 
-    //______________________Íæ¼ÒÊó±ê×ó¼üÏà¹ØµÄ´úÂë____________________________________________
-    /* ÔÚÒ»¶¨µÄÊ±¼äÄÚ£¬¼ÆËã°´ÏÂºÍÌ§ÆðµÄÊýÄ¿£¬Ê¹ÓÃÅÐ¶Ï·½·¨ÔÚÊÂ¼þ½áÊøÖ®ºó£¬¸ø³öÍæ¼Ò½øÐÐÁËÔõÑùµÄÐÐÎª¡£
-     * Èç¹ûÍæ¼ÒÔÚ¹æ¶¨Ê±¼äÄÚµ¥»÷£¬¶ÔËùÓÐµÄÒÑÑ¡¶¨µ¥Î»·¢³öÖ¸Áî¡£
-     * Èç¹ûÍæ¼ÒÔÚ¹æ¶¨Ê±¼äÄÚË«»÷£¬¶ÔËùÓÐµÄÒÑÑ¡¶¨µ¥Î»·¢³öÖ¸Áî¡£
-     * Èç¹ûÍæ¼ÒÔÚ¹æ¶¨Ê±¼äÄÚ³¤°´£¬½øÐÐ¿òÑ¡ÐÐÎª¡£
+    //______________________çŽ©å®¶é¼ æ ‡å·¦é”®ç›¸å…³çš„ä»£ç ____________________________________________
+    /* åœ¨ä¸€å®šçš„æ—¶é—´å†…ï¼Œè®¡ç®—æŒ‰ä¸‹å’ŒæŠ¬èµ·çš„æ•°ç›®ï¼Œä½¿ç”¨åˆ¤æ–­æ–¹æ³•åœ¨äº‹ä»¶ç»“æŸä¹‹åŽï¼Œç»™å‡ºçŽ©å®¶è¿›è¡Œäº†æ€Žæ ·çš„è¡Œä¸ºã€‚
+     * å¦‚æžœçŽ©å®¶åœ¨è§„å®šæ—¶é—´å†…å•å‡»ï¼Œå¯¹æ‰€æœ‰çš„å·²é€‰å®šå•ä½å‘å‡ºæŒ‡ä»¤ã€‚
+     * å¦‚æžœçŽ©å®¶åœ¨è§„å®šæ—¶é—´å†…åŒå‡»ï¼Œå¯¹æ‰€æœ‰çš„å·²é€‰å®šå•ä½å‘å‡ºæŒ‡ä»¤ã€‚
+     * å¦‚æžœçŽ©å®¶åœ¨è§„å®šæ—¶é—´å†…é•¿æŒ‰ï¼Œè¿›è¡Œæ¡†é€‰è¡Œä¸ºã€‚
      */
-    //------------------ÓÃÓÚ¼ÆËãÊ±¼ä¼ÍÂ¼µÄ±äÁ¿ºÍ·½·¨ÁÐ±íÈçÏÂ----------------------
+    //------------------ç”¨äºŽè®¡ç®—æ—¶é—´çºªå½•çš„å˜é‡å’Œæ–¹æ³•åˆ—è¡¨å¦‚ä¸‹----------------------
     float timeRecord = -1;
-    //¹æ¶¨µÄÊ±¼äÅÐ¶¨¼ä¸ô
+    //è§„å®šçš„æ—¶é—´åˆ¤å®šé—´éš”
     [SerializeField]
     private float timeLimitation = .3f;
     bool isPerformingAction = false;
@@ -53,29 +53,29 @@ public class PlayerControl : MonoBehaviour
     private float timeLimitation_Holding = .2f;
 
     /// <summary>
-    /// µ±Ç°×ó¼üÊó±êÊÂ¼þµÄ¼ÆÊ±Æ÷£¬ÕýÔÚ½øÐÐµÄÊÂ¼þÊÇ·ñ³¬Ê±£¿
-    /// ×¢Òâ£ºµ±°´×¡µÄÊ±ºò£¬ÌáÇ°½áÊøÊÂ¼þ¡£
+    /// å½“å‰å·¦é”®é¼ æ ‡äº‹ä»¶çš„è®¡æ—¶å™¨ï¼Œæ­£åœ¨è¿›è¡Œçš„äº‹ä»¶æ˜¯å¦è¶…æ—¶ï¼Ÿ
+    /// æ³¨æ„ï¼šå½“æŒ‰ä½çš„æ—¶å€™ï¼Œæå‰ç»“æŸäº‹ä»¶ã€‚
     /// </summary>
     private void LeftMouseActionsTimer()
     {
         if (isPerformingAction)
         {
-            //Èç¹û»¹ÔÚ¼È¶¨µÄÊ±¼äÒÔÄÚ
+            //å¦‚æžœè¿˜åœ¨æ—¢å®šçš„æ—¶é—´ä»¥å†…
             if (Time.time - timeRecord < timeLimitation && timeRecord != -1)
             {
                 
-            }// Èç¹ûÒÑ¾­³¬¹ýÁË¹æ¶¨µÄÊ±¼äÏÞÖÆ
+            }// å¦‚æžœå·²ç»è¶…è¿‡äº†è§„å®šçš„æ—¶é—´é™åˆ¶
             else if (Time.time - timeRecord > timeLimitation && timeRecord != -1)
             {
-                // Debug.log("Ê±¼ä½áÊø£¡");
+                // Debug.log("æ—¶é—´ç»“æŸï¼");
                 EndLeftMouseActions();
                 return;
             }
 
-            // Èç¹û³¤°´µÄÊ±¼ä³¬¹ýÁË¹æ¶¨Ê±¼äÏÞÖÆ
+            // å¦‚æžœé•¿æŒ‰çš„æ—¶é—´è¶…è¿‡äº†è§„å®šæ—¶é—´é™åˆ¶
             if (Time.time - timeHoldingRecord > timeLimitation_Holding && timeHoldingRecord != -1)
             {
-                // Debug.log("³¤°´µÄÊ±¼ä½áÊø£¡");
+                // Debug.log("é•¿æŒ‰çš„æ—¶é—´ç»“æŸï¼");
                 EndLeftMouseActions();
                 return;
             }
@@ -83,14 +83,14 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //______________________Íæ¼ÒÊó±ê×ó¼ü¼ì²âÏà¹ØµÄ´úÂë____________________________________________
+    //______________________çŽ©å®¶é¼ æ ‡å·¦é”®æ£€æµ‹ç›¸å…³çš„ä»£ç ____________________________________________
 
     /// <summary>
-    /// µ±Êó±ê×ó¼üÊÂ¼þ½áÊøÖ®ºó...
+    /// å½“é¼ æ ‡å·¦é”®äº‹ä»¶ç»“æŸä¹‹åŽ...
     /// </summary>
     private void EndLeftMouseActions()
     {
-        //ÔÚÊÂ¼þ½áÊøÖ®ºó£¬¶ÔÍæ¼Ò½øÐÐµÄÊÂ¼þ½øÐÐÅÐ¶¨£¬Íæ¼Ò½øÐÐÁËµ¥»÷£¬»¹ÊÇË«»÷£¿ÓÖ»òÕßÊÇ³¤°´£¿
+        //åœ¨äº‹ä»¶ç»“æŸä¹‹åŽï¼Œå¯¹çŽ©å®¶è¿›è¡Œçš„äº‹ä»¶è¿›è¡Œåˆ¤å®šï¼ŒçŽ©å®¶è¿›è¡Œäº†å•å‡»ï¼Œè¿˜æ˜¯åŒå‡»ï¼Ÿåˆæˆ–è€…æ˜¯é•¿æŒ‰ï¼Ÿ
         DetermineLeftMouseAction();
 
         if (ifLeftButtonSingleClickedEvent)
@@ -102,21 +102,21 @@ public class PlayerControl : MonoBehaviour
             LeftDoubleClickAction();
             ifLeftButtonDoubleClickedEvent = false;
         } else if (ifLeftButtonLongPressEvent) {
-            //Èç¹ûÏëÒª´úÂëÔÚ×ó¼ü³¤°´ÊÂ¼þ³öÏÖÊ±±»´¥·¢£¬Çë½«´úÂë·ÅÔÚÒÔÏÂ·½·¨Àï¡£
+            //å¦‚æžœæƒ³è¦ä»£ç åœ¨å·¦é”®é•¿æŒ‰äº‹ä»¶å‡ºçŽ°æ—¶è¢«è§¦å‘ï¼Œè¯·å°†ä»£ç æ”¾åœ¨ä»¥ä¸‹æ–¹æ³•é‡Œã€‚
             LeftLongPressAction();
             ifLeftButtonLongPressEvent = false;
         }
 
-        //½«ËùÓÐÏà¹ØµÄ±äÁ¿¸ü¸ÄÎªÄ¬ÈÏÖµ
+        //å°†æ‰€æœ‰ç›¸å…³çš„å˜é‡æ›´æ”¹ä¸ºé»˜è®¤å€¼
         LeftButtonCountersRenew();
     }
-    //------------------ÓÃÓÚ¼ì²âÊó±ê×ó¼üÊÂ¼þµÄ±äÁ¿ºÍ·½·¨ÁÐ±íÈçÏÂ£º-------------
+    //------------------ç”¨äºŽæ£€æµ‹é¼ æ ‡å·¦é”®äº‹ä»¶çš„å˜é‡å’Œæ–¹æ³•åˆ—è¡¨å¦‚ä¸‹ï¼š-------------
     int leftButtonDownCounter = 0;
     int leftButtonUpCounter = 0;
 
-    //¼ì²âÊÇ·ñÕýÔÚ×ó¼ü³¤°´Êó±ê
+    //æ£€æµ‹æ˜¯å¦æ­£åœ¨å·¦é”®é•¿æŒ‰é¼ æ ‡
     bool ifLeftButtonLongPressing = false;
-    //¼ì²âÊÇ·ñÒª´¥·¢×ó¼ü³¤°´ÊÂ¼þ
+    //æ£€æµ‹æ˜¯å¦è¦è§¦å‘å·¦é”®é•¿æŒ‰äº‹ä»¶
     bool ifLeftButtonLongPressEvent = false;
     
     bool ifLeftButtonSingleClickedEvent = false;
@@ -124,20 +124,20 @@ public class PlayerControl : MonoBehaviour
 
 
     /// <summary>
-    /// ¼ì²âÊó±ê×ó¼ü²úÉúµÄÊÂ¼þ
+    /// æ£€æµ‹é¼ æ ‡å·¦é”®äº§ç”Ÿçš„äº‹ä»¶
     /// </summary>
     void LeftMouseActions() 
     {
-        //Èç¹ûÊó±ê×ó¼ü°´ÏÂÁË
+        //å¦‚æžœé¼ æ ‡å·¦é”®æŒ‰ä¸‹äº†
         if (LeftButtonDown()) {
             leftButtonDownCounter++;
             ifLeftButtonLongPressing = true;
-            //Èç¹ûµ±Ç°²¢Ã»ÓÐÕýÔÚ½øÐÐµÄÊó±êÊÂ¼þÅÐ¶¨£¬ÏÖÔÚ¿ªÊ¼¼ÇÂ¼ÊÂ¼þµÄ¿ªÊ¼¡£
+            //å¦‚æžœå½“å‰å¹¶æ²¡æœ‰æ­£åœ¨è¿›è¡Œçš„é¼ æ ‡äº‹ä»¶åˆ¤å®šï¼ŒçŽ°åœ¨å¼€å§‹è®°å½•äº‹ä»¶çš„å¼€å§‹ã€‚
             if (!isPerformingAction)
             {
-                // Debug.log("ÄãÒÑ¾­°´ÏÂ×ó¼ü£¬ÊÂ¼þ¿ªÊ¼¼ÇÂ¼¡£");
+                // Debug.log("ä½ å·²ç»æŒ‰ä¸‹å·¦é”®ï¼Œäº‹ä»¶å¼€å§‹è®°å½•ã€‚");
                 StartRecordingLeftMouseEvent();
-                //¼ÇÂ¼Êó±ê°´Ñ¹µÄÊ±¼ä
+                //è®°å½•é¼ æ ‡æŒ‰åŽ‹çš„æ—¶é—´
                 timeHoldingRecord = Time.time;
             }
             else 
@@ -145,7 +145,7 @@ public class PlayerControl : MonoBehaviour
             
             }
         }
-        //Èç¹ûÊó±ê×ó¼üÌ§ÆðÁË
+        //å¦‚æžœé¼ æ ‡å·¦é”®æŠ¬èµ·äº†
         if (LeftButtonUp())
         {
             ifLeftButtonLongPressing = false;
@@ -163,30 +163,30 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// µ±Êó±ê×ó¼ü¿ªÊ¼ÁËÒ»¸öÊÂ¼þµÄÊ±ºò
+    /// å½“é¼ æ ‡å·¦é”®å¼€å§‹äº†ä¸€ä¸ªäº‹ä»¶çš„æ—¶å€™
     /// </summary>
     private void StartRecordingLeftMouseEvent()
     {
         isPerformingAction = true;
         timeRecord = Time.time;
-        // Debug.log("ÊÂ¼þµÄ¿ªÊ¼Ê±¼äÊÇ£º" + timeRecord);
+        // Debug.log("äº‹ä»¶çš„å¼€å§‹æ—¶é—´æ˜¯ï¼š" + timeRecord);
         RecordingClickPosition_OnScreen();
     }
 
-    /// <returns>ÊÇ·ñ°´ÏÂ×ó¼ü°´Å¥£¿</returns>
+    /// <returns>æ˜¯å¦æŒ‰ä¸‹å·¦é”®æŒ‰é’®ï¼Ÿ</returns>
     private bool LeftButtonDown()
     {
         return Input.GetMouseButtonDown(0);
     }
 
-    /// <returns>ÊÇ·ñÌ§Æð×ó¼ü°´Å¥£¿</returns>
+    /// <returns>æ˜¯å¦æŠ¬èµ·å·¦é”®æŒ‰é’®ï¼Ÿ</returns>
     private bool LeftButtonUp()
     {
         return Input.GetMouseButtonUp(0);
     }
 
     /// <summary>
-    /// ÖØÖÆËùÓÐÓë×ó¼üÊÂ¼þÏà¹ØµÄ±äÁ¿£¬µ½×î³õµÄ³õÊ¼×´Ì¬
+    /// é‡åˆ¶æ‰€æœ‰ä¸Žå·¦é”®äº‹ä»¶ç›¸å…³çš„å˜é‡ï¼Œåˆ°æœ€åˆçš„åˆå§‹çŠ¶æ€
     /// </summary>
     private void LeftButtonCountersRenew() 
     {
@@ -199,9 +199,9 @@ public class PlayerControl : MonoBehaviour
 
 
 
-    //------------------ÓÃÓÚÅÐ¶ÏËù½øÐÐµÄÊó±ê×ó¼üÊÂ¼þÀàÐÍµÄ±äÁ¿ºÍ·½·¨ÁÐ±íÈçÏÂ£º-------------
+    //------------------ç”¨äºŽåˆ¤æ–­æ‰€è¿›è¡Œçš„é¼ æ ‡å·¦é”®äº‹ä»¶ç±»åž‹çš„å˜é‡å’Œæ–¹æ³•åˆ—è¡¨å¦‚ä¸‹ï¼š-------------
     /// <summary>
-    /// Íæ¼ÒÔÚÊ±¼äÏÞÖÆÄÚ£¬Ö´ÐÐÁËÔõÑùµÄÊÂ¼þ£¿
+    /// çŽ©å®¶åœ¨æ—¶é—´é™åˆ¶å†…ï¼Œæ‰§è¡Œäº†æ€Žæ ·çš„äº‹ä»¶ï¼Ÿ
     /// </summary>
     private void DetermineLeftMouseAction()
     {
@@ -209,7 +209,7 @@ public class PlayerControl : MonoBehaviour
         {
             ifLeftButtonSingleClickedEvent = true;
         }
-        // ×¢£º ÎÒÔÚÕâÀïÉè¶¨£¬Èç¹ûÔÚ¹æ¶¨Ê±¼äÒÔÄÚµã»÷´ÎÊýµÈÓÚ£¬»òÕß³¬¹ý2´Î£¬ÎÒ¶¼ÉèÖÃÎªÁËË«»÷¡£
+        // æ³¨ï¼š æˆ‘åœ¨è¿™é‡Œè®¾å®šï¼Œå¦‚æžœåœ¨è§„å®šæ—¶é—´ä»¥å†…ç‚¹å‡»æ¬¡æ•°ç­‰äºŽï¼Œæˆ–è€…è¶…è¿‡2æ¬¡ï¼Œæˆ‘éƒ½è®¾ç½®ä¸ºäº†åŒå‡»ã€‚
         else if (leftButtonDownCounter >= 2 && leftButtonDownCounter == leftButtonUpCounter)
         {
             ifLeftButtonDoubleClickedEvent = true;
@@ -218,11 +218,11 @@ public class PlayerControl : MonoBehaviour
         }
     }
     /// <summary>
-    /// Êó±ê×ó¼üµ¥»÷ÊÂ¼þ±»¼ì²âµ½µÄÊ±ºò
+    /// é¼ æ ‡å·¦é”®å•å‡»äº‹ä»¶è¢«æ£€æµ‹åˆ°çš„æ—¶å€™
     /// </summary>
     private void LeftSingleClickAction()
     {
-        // Debug.log("¼ì²âµ½Êó±ê×ó¼üµ¥»÷¡£");
+        // Debug.log("æ£€æµ‹åˆ°é¼ æ ‡å·¦é”®å•å‡»ã€‚");
 
         if (playerSelectedUnits.Count == 0)
         {
@@ -239,20 +239,21 @@ public class PlayerControl : MonoBehaviour
         else if (playerSelectedUnits.Count > 0)
         {
             ResetHitValue();
-            //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÕâ¸öµØ·½ÓÐ½øÐÐÓÅ»¯µÄ¿Õ¼ä£¬µ«ÊÇÓÉÓÚÊ±¼ä¹ØÏµ£¬ÕâÀïÔÝÇÒÏÈ²»×öµ÷Õû¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+            //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”è¿™ä¸ªåœ°æ–¹æœ‰è¿›è¡Œä¼˜åŒ–çš„ç©ºé—´ï¼Œä½†æ˜¯ç”±äºŽæ—¶é—´å…³ç³»ï¼Œè¿™é‡Œæš‚ä¸”å…ˆä¸åšè°ƒæ•´â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+            //ä¼šå†æ¬¡é‡å¤çš„å‘å‡ºraycastï¼Œä½†æ˜¯ç”±äºŽæ•°ç›®æžå°ï¼Œå¯¹æ€§èƒ½å½±å“å¾®å¼±ï¼Œæš‚ä¸”ä¸åšè°ƒæ•´
             UnitControl unit = ReturnHitUnit();
             Vector3 position = ReturnHitGroundPosition();
             if (isHitUnit)
             {
                 if (unit.playerID == playerID)
                 {
-                    //Èç¹û»÷ÖÐµØÃæ£¬ÒªÇóÄ¿±êÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ¡£
+                    //å¦‚æžœå‡»ä¸­åœ°é¢ï¼Œè¦æ±‚ç›®æ ‡ç§»åŠ¨åˆ°æŒ‡å®šä½ç½®ã€‚
                     UnitMoving();
                 }
                 else
                 {
                     //Attack();
-                    Debug.Log("¹¥»÷Ö¸¶¨Ä¿±ê£¡ " + unit.name);
+                    Debug.Log("æ”»å‡»æŒ‡å®šç›®æ ‡ï¼ " + unit.name);
                 }
             }
             else if (isHitGround)
@@ -261,23 +262,23 @@ public class PlayerControl : MonoBehaviour
             }
         }
         else {
-            Debug.LogError("Player selected units amount should not under 0! Íæ¼ÒÒÑÑ¡ÔñµÄµ¥Î»ÊýÄ¿²»Ó¦¸ÃµÍÓÚ0£¡");
+            Debug.LogError("Player selected units amount should not under 0! çŽ©å®¶å·²é€‰æ‹©çš„å•ä½æ•°ç›®ä¸åº”è¯¥ä½ŽäºŽ0ï¼");
         }
 
     }
     /// <summary>
-    /// Êó±ê×ó¼üË«»÷ÊÂ¼þ±»¼ì²âµ½µÄÊ±ºò
+    /// é¼ æ ‡å·¦é”®åŒå‡»äº‹ä»¶è¢«æ£€æµ‹åˆ°çš„æ—¶å€™
     /// </summary>
     private void LeftDoubleClickAction()
     {
-        // Debug.log("¼ì²âµ½Êó±ê×ó¼üË«»÷¡£");
+        // Debug.log("æ£€æµ‹åˆ°é¼ æ ‡å·¦é”®åŒå‡»ã€‚");
     }
     /// <summary>
-    /// Êó±ê×ó¼ü³¤°´ÊÂ¼þ±»¼ì²âµ½µÄÊ±ºò
+    /// é¼ æ ‡å·¦é”®é•¿æŒ‰äº‹ä»¶è¢«æ£€æµ‹åˆ°çš„æ—¶å€™
     /// </summary>
     private void LeftLongPressAction()
     {
-        // Debug.log("¼ì²âµ½Êó±ê×ó¼ü³¤°´¡£");
+        // Debug.log("æ£€æµ‹åˆ°é¼ æ ‡å·¦é”®é•¿æŒ‰ã€‚");
         isRecordingMousePosition = true;
 
     }
@@ -286,7 +287,7 @@ public class PlayerControl : MonoBehaviour
         BoxSelecting();
     }
 
-    //______________________¿òÑ¡¹¦ÄÜµÄ´úÂë____________________________________________
+    //______________________æ¡†é€‰åŠŸèƒ½çš„ä»£ç ____________________________________________
     [SerializeField]
     Vector3 eventClickPosition;
     [SerializeField]
@@ -294,11 +295,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     private Camera mainCamera;
     bool isRecordingMousePosition = false;
-    public LayerMask unitLayer; // µ¥Î»µÄÍ¼²ã
+    public LayerMask unitLayer; // å•ä½çš„å›¾å±‚
     [SerializeField]
 
     /// <summary>
-    /// ¼ÇÂ¼ÏÂÊó±êÌ§ÆðÊ±ºò£¬Êó±êÍ£ÁôµÄÎ»ÖÃ
+    /// è®°å½•ä¸‹é¼ æ ‡æŠ¬èµ·æ—¶å€™ï¼Œé¼ æ ‡åœç•™çš„ä½ç½®
     /// </summary>
 
     void RecordingClickPosition_OnScreen()
@@ -310,24 +311,24 @@ public class PlayerControl : MonoBehaviour
         eventReleasePosition = Input.mousePosition;
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¿òÑ¡¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”æ¡†é€‰â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     Rect screenSelectRect;
 
     /// <summary>
-    /// ¿òÑ¡µÄÖ÷Òª¹¦ÄÜ
+    /// æ¡†é€‰çš„ä¸»è¦åŠŸèƒ½
     /// </summary>
     void BoxSelecting()
     {
-        //foreach ¾­¹ýÃ¿Ò»¸öÍæ¼Ò¿É¿ØÖÆµÄUnit
+        //foreach ç»è¿‡æ¯ä¸€ä¸ªçŽ©å®¶å¯æŽ§åˆ¶çš„Unit
         if (playerUnits.Count != 0) {
             playerSelectedUnits.Clear();
             foreach (UnitControl unit in playerUnits)
             {
-                //À´ÅÐ¶ÏÎïÌåÓÐÃ»ÓÐÔÚ·¶Î§ÄÚ¡£
+                //æ¥åˆ¤æ–­ç‰©ä½“æœ‰æ²¡æœ‰åœ¨èŒƒå›´å†…ã€‚
                 if (UnitInTheArea(unit.getPosition()))
                 {
                     playerSelectedUnits.Add(unit);
-                    //Debug.log("ÎïÆ·ÒÑ¾­Ìí¼Ó¡£");
+                    //Debug.log("ç‰©å“å·²ç»æ·»åŠ ã€‚");
                 }
                 else
                 {
@@ -341,28 +342,28 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// »ùÓÚµ±Ç°ÎïÌåµÄËù´¦Î»ÖÃ£¬ÅÐ¶ÏËüÊÇ·ñÔÚÍæ¼ÒÔÚÆÁÄ»ÉÏ¿òÑ¡Ö®ÄÚ¡£
+    /// åŸºäºŽå½“å‰ç‰©ä½“çš„æ‰€å¤„ä½ç½®ï¼Œåˆ¤æ–­å®ƒæ˜¯å¦åœ¨çŽ©å®¶åœ¨å±å¹•ä¸Šæ¡†é€‰ä¹‹å†…ã€‚
     /// </summary>
-    /// <param name="position">µ±Ç°ÎïÌåµÄÎ»ÖÃÐÅÏ¢</param>
-    /// <returns>·µ»Øµ±Ç°µÄµ¥Î»ÊÇ·ñÔÚÍæ¼ÒµÄ¿òÑ¡·¶Î§Ö®ÄÚ</returns>
+    /// <param name="position">å½“å‰ç‰©ä½“çš„ä½ç½®ä¿¡æ¯</param>
+    /// <returns>è¿”å›žå½“å‰çš„å•ä½æ˜¯å¦åœ¨çŽ©å®¶çš„æ¡†é€‰èŒƒå›´ä¹‹å†…</returns>
     private bool UnitInTheArea(Vector3 position)
     {
         if (InSelectArea(position))
         {
-            //Debug.log("µ±Ç°ÎïÌåÔÚ¿òÑ¡·¶Î§Ö®ÄÚ¡£ ");
+            //Debug.log("å½“å‰ç‰©ä½“åœ¨æ¡†é€‰èŒƒå›´ä¹‹å†…ã€‚ ");
             return true;
         }
         else {
-            //Debug.log("µ±Ç°ÎïÌå²»ÔÚ¿òÑ¡·¶Î§Ö®ÄÚ¡£ ");
+            //Debug.log("å½“å‰ç‰©ä½“ä¸åœ¨æ¡†é€‰èŒƒå›´ä¹‹å†…ã€‚ ");
             return false;
         }
     }
 
     /// <summary>
-    /// Èç¹û±»¸øÓèµÄÎ»ÖÃÐÅÏ¢ÔÚ¿òÑ¡µÄ·¶Î§Ö®ÄÚ£¿
+    /// å¦‚æžœè¢«ç»™äºˆçš„ä½ç½®ä¿¡æ¯åœ¨æ¡†é€‰çš„èŒƒå›´ä¹‹å†…ï¼Ÿ
     /// </summary>
-    /// <param name="onCameraPosition">¸øÓèÎ»ÖÃ</param>
-    /// <returns>ÊÇ·ñÔÚ¿òÑ¡µÄÎ»ÖÃÖ®ÄÚ£¿</returns>
+    /// <param name="onCameraPosition">ç»™äºˆä½ç½®</param>
+    /// <returns>æ˜¯å¦åœ¨æ¡†é€‰çš„ä½ç½®ä¹‹å†…ï¼Ÿ</returns>
     private bool InSelectArea(Vector3 onCameraPosition)
     {
         //Debug.log(ConvertToScreenPosition(onCameraPosition));
@@ -371,57 +372,50 @@ public class PlayerControl : MonoBehaviour
 
     Vector3 ConvertToScreenPosition(Vector3 gamePosition)
     {
-        // ½«ÊÀ½ç×ø±ê×ª»»ÎªÆÁÄ»×ø±ê
+        // å°†ä¸–ç•Œåæ ‡è½¬æ¢ä¸ºå±å¹•åæ ‡
         Vector3 screenPosition = mainCamera.WorldToScreenPoint(gamePosition);
 
-        // Unity ÆÁÄ»×ø±êÏµµÄ Y ÖáÊÇ·´ÏòµÄ£¬ÐèÒª½øÐÐÐÞÕý
+        // Unity å±å¹•åæ ‡ç³»çš„ Y è½´æ˜¯åå‘çš„ï¼Œéœ€è¦è¿›è¡Œä¿®æ­£
         screenPosition.y = Screen.height - screenPosition.y;
 
         return screenPosition;
     }
 
     /// <summary>
-    /// ÔÚÆÁÄ»ÉÏ»­³öÒ»¸ö¾ØÐÎ£¬À´±íÊ¾¿òÑ¡µÄÊµ¼Ê·¶Î§¡£
+    /// åœ¨å±å¹•ä¸Šç”»å‡ºä¸€ä¸ªçŸ©å½¢ï¼Œæ¥è¡¨ç¤ºæ¡†é€‰çš„å®žé™…èŒƒå›´ã€‚
     /// </summary>
-    /// <param name="startPos">´ÓÊ²Ã´µØ·½¿ªÊ¼»­£¿</param>
-    /// <param name="endPos">´ÓÊ²Ã´µØ·½½áÊø£¿</param>
+    /// <param name="startPos">ä»Žä»€ä¹ˆåœ°æ–¹å¼€å§‹ç”»ï¼Ÿ</param>
+    /// <param name="endPos">ä»Žä»€ä¹ˆåœ°æ–¹ç»“æŸï¼Ÿ</param>
     /// <returns></returns>
     private Rect GetScreenRect(Vector3 startPos, Vector3 endPos)
     {
-        // ¼ÆËã¾ØÐÎµÄ×óÉÏ½ÇÎ»ÖÃºÍ¿í¸ß
+        // è®¡ç®—çŸ©å½¢çš„å·¦ä¸Šè§’ä½ç½®å’Œå®½é«˜
         Vector2 min = Vector2.Min(startPos, endPos);
         Vector2 max = Vector2.Max(startPos, endPos);
         return new Rect(min.x, Screen.height - max.y, max.x - min.x, max.y - min.y);
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª ×ó¼üÐÐÎª ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” å·¦é”®è¡Œä¸º â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+    //æŒ‡ç¤ºå•ä½å‘ç€ç›®æ ‡æ–¹å‘å‰è¿›ã€‚
     private void UnitMoving() {
-        foreach (UnitControl item in playerSelectedUnits)
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            // æ£€æµ‹åˆ°åœ°é¢å‘½ä¸­
+            if (hit.collider.CompareTag("Ground"))
             {
-                // ¼ì²âµ½µØÃæÃüÖÐ
-                if (hit.collider.CompareTag("Ground"))
-                {
-                    Vector3 groundPosition = hit.point;
-                    // ÔÚÕâÀï´¦ÀíµØÃæÃüÖÐµÄÎ»ÖÃ
-                    item.MoveToWardTargetTrigger(groundPosition);
-                    Debug.Log("Object trying to move: " + item.gameObject.name + " Destination: " + groundPosition);
-                }
+                Vector3 groundPosition = hit.point;
+                TeamOrdering(groundPosition);
             }
-
-            
-            
         }
     }
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª ÓÒ¼üÐÐÎª ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” å³é”®è¡Œä¸º â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     
-    //______________________Íæ¼ÒÊó±êÓÒ¼ü¼ì²âÏà¹ØµÄ´úÂë____________________________________________
+    //______________________çŽ©å®¶é¼ æ ‡å³é”®æ£€æµ‹ç›¸å…³çš„ä»£ç ____________________________________________
     /// <summary>
-    /// ÓÉÓÚ¿ª·¢ÕßµÄ¼«¶ÈÀÁ¶èÐÐÎª£¬Ä¿Ç°Ö»¼ì²âÓÒ¼üµ¥»÷ÐÐÎª¡£
+    /// ç”±äºŽå¼€å‘è€…çš„æžåº¦æ‡’æƒ°è¡Œä¸ºï¼Œç›®å‰åªæ£€æµ‹å³é”®å•å‡»è¡Œä¸ºã€‚
     /// </summary>
     void RightMouseActions()
     {
@@ -431,9 +425,9 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÊó±êÓÒ¼üµÄÊÂ¼þ·½·¨¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”é¼ æ ‡å³é”®çš„äº‹ä»¶æ–¹æ³•â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     /// <summary>
-    /// µ±¼ì²âµ½Êó±êÓÒ¼ü»î¶¯Ö®ºó£¬¼¤»î¸Ã·½·¨¡£
+    /// å½“æ£€æµ‹åˆ°é¼ æ ‡å³é”®æ´»åŠ¨ä¹‹åŽï¼Œæ¿€æ´»è¯¥æ–¹æ³•ã€‚
     /// </summary>
     private void RightSingleClickAction()
     {
@@ -441,50 +435,50 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÓëÆäËûÎïÌåµÄ×é¼þ½øÐÐ¹µÍ¨µÄ¹«¹²·½·¨¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”ä¸Žå…¶ä»–ç‰©ä½“çš„ç»„ä»¶è¿›è¡Œæ²Ÿé€šçš„å…¬å…±æ–¹æ³•â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     public void AddUnit(UnitControl unit) 
     { 
         playerUnits.Add(unit);
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª»ñÈ¡µ±Ç°Êó±êµÄÄ¿±ê¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”èŽ·å–å½“å‰é¼ æ ‡çš„ç›®æ ‡â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     /*
-     * ÎÒÈÏÎªÒ»ÏÂµÄHitÏµÁÐ¹¦ÄÜ¿ÉÒÔÓÅ»¯£¬ÕûºÏ³ÉÎªµ¥¶ÀÒ»¸öÅÐ¶Ï·½·¨¡£ Èç¹ûÕûºÏÖ®ºó£¬×ó¼üµÄµ¥»÷ÅÐ¶ÏµÐÈË£¬µØÃæºÍÓÑ¾üµÄÂß¼­Ò²¿ÉÒÔ½øÐÐÓÅ»¯¡£
-     * µ«ÊÇÒòÎªÊ±¼äµÄÎÊÌâ£¬×÷Õß½«ÔÝÊ±²»¶ÔÕâÀï½øÐÐÓÅ»¯ÐÞ¸Ä¡£
+     * æˆ‘è®¤ä¸ºä¸€ä¸‹çš„Hitç³»åˆ—åŠŸèƒ½å¯ä»¥ä¼˜åŒ–ï¼Œæ•´åˆæˆä¸ºå•ç‹¬ä¸€ä¸ªåˆ¤æ–­æ–¹æ³•ã€‚ å¦‚æžœæ•´åˆä¹‹åŽï¼Œå·¦é”®çš„å•å‡»åˆ¤æ–­æ•Œäººï¼Œåœ°é¢å’Œå‹å†›çš„é€»è¾‘ä¹Ÿå¯ä»¥è¿›è¡Œä¼˜åŒ–ã€‚
+     * ä½†æ˜¯å› ä¸ºæ—¶é—´çš„é—®é¢˜ï¼Œä½œè€…å°†æš‚æ—¶ä¸å¯¹è¿™é‡Œè¿›è¡Œä¼˜åŒ–ä¿®æ”¹ã€‚
      */
     
-    //ÅÐ¶ÏÄ¿±êµÄÖÖÀà¡£
+    //åˆ¤æ–­ç›®æ ‡çš„ç§ç±»ã€‚
     bool isHitGround = false;
     bool isHitUnit = false;
     bool isHitBuilding = false;
     /// <summary>
-    /// ·µ»Øµ±Ç°Êó±êÎ»ÖÃÔÚÓÎÏ·µÄÊÀ½çÄÚ´ú±íµÄVector3 PostionÎ»ÖÃÊýÖµ¡£
-    /// ×¢Òâ£º²»ÊÇÆÁÄ»ÉÏÊó±êÎ»ÖÃ£¬¶øÊÇÓÎÏ·ÊÀ½çÄÚ´ËÊ±Êó±êËùÖ¸Î»ÖÃ¡£ 
-    /// ×¢Òâ£ºÈç¹û¼¯ÖÐµØÃæ£¬isHitGround»áÏÔÊ¾ÎªTrue
+    /// è¿”å›žå½“å‰é¼ æ ‡ä½ç½®åœ¨æ¸¸æˆçš„ä¸–ç•Œå†…ä»£è¡¨çš„Vector3 Postionä½ç½®æ•°å€¼ã€‚
+    /// æ³¨æ„ï¼šä¸æ˜¯å±å¹•ä¸Šé¼ æ ‡ä½ç½®ï¼Œè€Œæ˜¯æ¸¸æˆä¸–ç•Œå†…æ­¤æ—¶é¼ æ ‡æ‰€æŒ‡ä½ç½®ã€‚ 
+    /// æ³¨æ„ï¼šå¦‚æžœé›†ä¸­åœ°é¢ï¼ŒisHitGroundä¼šæ˜¾ç¤ºä¸ºTrue
     /// </summary>
-    /// <returns>µ±Ç°Êó±êÔÚÓÎÏ·ÊÀ½çÀïµÄµØÃæÎ»ÖÃ</returns>
+    /// <returns>å½“å‰é¼ æ ‡åœ¨æ¸¸æˆä¸–ç•Œé‡Œçš„åœ°é¢ä½ç½®</returns>
     Vector3 ReturnHitGroundPosition()
     {
         Vector3 clickPosition = new Vector3(0f, 0f, 0f);
-        // ´´½¨Ò»Ìõ´ÓÊó±êµã»÷Î»ÖÃÏòÆÁÄ»·¢ÉäµÄÉäÏß
+        // åˆ›å»ºä¸€æ¡ä»Žé¼ æ ‡ç‚¹å‡»ä½ç½®å‘å±å¹•å‘å°„çš„å°„çº¿
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // ¼ì²âÉäÏßÊÇ·ñÓëµØÃæÅö×²
+        // æ£€æµ‹å°„çº¿æ˜¯å¦ä¸Žåœ°é¢ç¢°æ’ž
         if (Physics.Raycast(ray, out hit))
         {
-            // ¼ì²éÊÇ·ñµã»÷µ½´øÓÐ"Ground"±êÇ©µÄÎïÌå
+            // æ£€æŸ¥æ˜¯å¦ç‚¹å‡»åˆ°å¸¦æœ‰"Ground"æ ‡ç­¾çš„ç‰©ä½“
             if (hit.collider.CompareTag("Ground"))
             {
 
-                // »ñÈ¡Åö×²µãµÄ×ø±ê
+                // èŽ·å–ç¢°æ’žç‚¹çš„åæ ‡
                 clickPosition = hit.point;
 
-                //ÅÐ¶ÏÊó±êµÄÎ»ÖÃÔÚµØÃæÉÏ
+                //åˆ¤æ–­é¼ æ ‡çš„ä½ç½®åœ¨åœ°é¢ä¸Š
                 isHitGround= true;
 
-                // ÔÚÕâÀï¿ÉÒÔ¶Ôµã»÷Î»ÖÃ½øÐÐ´¦Àí
-                // ÀýÈçÔÚ¸ÃÎ»ÖÃ´´½¨µ¥Î»»ò½øÐÐÆäËû²Ù×÷
+                // åœ¨è¿™é‡Œå¯ä»¥å¯¹ç‚¹å‡»ä½ç½®è¿›è¡Œå¤„ç†
+                // ä¾‹å¦‚åœ¨è¯¥ä½ç½®åˆ›å»ºå•ä½æˆ–è¿›è¡Œå…¶ä»–æ“ä½œ
                 // Debug.log("Clicked position: " + clickPosition);
                 return clickPosition;
             }
@@ -498,33 +492,33 @@ public class PlayerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// ·µ»Øµ±Ç°Êó±êÎ»ÖÃÔÚÓÎÏ·µÄÊÀ½çÄÚ´ú±íµÄVector3 PostionÎ»ÖÃÊýÖµ¡£
-    /// ×¢Òâ£º²»ÊÇÆÁÄ»ÉÏÊó±êÎ»ÖÃ£¬¶øÊÇÓÎÏ·ÊÀ½çÄÚ´ËÊ±Êó±êËùÖ¸Î»ÖÃ¡£ 
-    /// ×¢Òâ£ºÈç¹û¼¯ÖÐµØÃæ£¬isHitGround»áÏÔÊ¾ÎªTrue
+    /// è¿”å›žå½“å‰é¼ æ ‡ä½ç½®åœ¨æ¸¸æˆçš„ä¸–ç•Œå†…ä»£è¡¨çš„Vector3 Postionä½ç½®æ•°å€¼ã€‚
+    /// æ³¨æ„ï¼šä¸æ˜¯å±å¹•ä¸Šé¼ æ ‡ä½ç½®ï¼Œè€Œæ˜¯æ¸¸æˆä¸–ç•Œå†…æ­¤æ—¶é¼ æ ‡æ‰€æŒ‡ä½ç½®ã€‚ 
+    /// æ³¨æ„ï¼šå¦‚æžœé›†ä¸­åœ°é¢ï¼ŒisHitGroundä¼šæ˜¾ç¤ºä¸ºTrue
     /// </summary>
-    /// <returns>µ±Ç°Êó±êÔÚÓÎÏ·ÊÀ½çÀïµÄµØÃæÎ»ÖÃ</returns>
+    /// <returns>å½“å‰é¼ æ ‡åœ¨æ¸¸æˆä¸–ç•Œé‡Œçš„åœ°é¢ä½ç½®</returns>
     UnitControl ReturnHitUnit()
     {
         UnitControl unit;
-        // ´´½¨Ò»Ìõ´ÓÊó±êµã»÷Î»ÖÃÏòÆÁÄ»·¢ÉäµÄÉäÏß
+        // åˆ›å»ºä¸€æ¡ä»Žé¼ æ ‡ç‚¹å‡»ä½ç½®å‘å±å¹•å‘å°„çš„å°„çº¿
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // ¼ì²âÉäÏßÊÇ·ñÓëµØÃæÅö×²
+        // æ£€æµ‹å°„çº¿æ˜¯å¦ä¸Žåœ°é¢ç¢°æ’ž
         if (Physics.Raycast(ray, out hit))
         {
-            // ¼ì²éÊÇ·ñµã»÷µ½´øÓÐ"Ground"±êÇ©µÄÎïÌå
+            // æ£€æŸ¥æ˜¯å¦ç‚¹å‡»åˆ°å¸¦æœ‰"Ground"æ ‡ç­¾çš„ç‰©ä½“
             if (hit.collider.CompareTag("Units"))
             {
 
-                // »ñÈ¡Åö×²µãµÄ×ø±ê
+                // èŽ·å–ç¢°æ’žç‚¹çš„åæ ‡
                 unit = hit.collider.gameObject.GetComponent<UnitControl>();
 
-                //ÅÐ¶ÏÊó±êµÄÎ»ÖÃÔÚµØÃæÉÏ
+                //åˆ¤æ–­é¼ æ ‡çš„ä½ç½®åœ¨åœ°é¢ä¸Š
                 isHitUnit = true;
 
-                // ÔÚÕâÀï¿ÉÒÔ¶Ôµã»÷Î»ÖÃ½øÐÐ´¦Àí
-                // ÀýÈçÔÚ¸ÃÎ»ÖÃ´´½¨µ¥Î»»ò½øÐÐÆäËû²Ù×÷
+                // åœ¨è¿™é‡Œå¯ä»¥å¯¹ç‚¹å‡»ä½ç½®è¿›è¡Œå¤„ç†
+                // ä¾‹å¦‚åœ¨è¯¥ä½ç½®åˆ›å»ºå•ä½æˆ–è¿›è¡Œå…¶ä»–æ“ä½œ
                 // Debug.log("Clicked position: " + clickPosition);
                 return unit;
             }
@@ -539,7 +533,7 @@ public class PlayerControl : MonoBehaviour
 
     
     /// <summary>
-    /// ÖØÖÃ»÷ÖÐÅÐ¶Ï±äÁ¿Îª³õÊ¼false×´Ì¬¡£
+    /// é‡ç½®å‡»ä¸­åˆ¤æ–­å˜é‡ä¸ºåˆå§‹falseçŠ¶æ€ã€‚
     /// </summary>
     private void ResetHitValue() 
     {
@@ -547,7 +541,61 @@ public class PlayerControl : MonoBehaviour
         isHitGround= false;
         isHitUnit= false;
     }
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª Unity ·½·¨ ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” åˆ—é˜ŸåŠŸèƒ½ â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+    //æ¯ä¸€ä¸ªåˆ—é˜Ÿçš„æœ€å¤§æˆå‘˜æ•°å­—ï¼Œï¼ˆé»˜è®¤è®¾ç½®3*3ï¼‰ç”¨äºŽè®¡ç®—åˆ—é˜Ÿçš„è¡Œæ•°ã€‚
+    public float maxUnits = 1;
+    public float offsetX = 2f; // å•ä½ä¹‹é—´çš„æ°´å¹³åç§»é‡
+    public float offsetZ = 2f; // å•ä½ä¹‹é—´çš„åž‚ç›´åç§»é‡
+
+    ///// <summary>
+    ///// åˆ—é˜Ÿå‰è¡Œçš„ä¸»è¦åŠŸèƒ½
+    ///// è®¡ç®—é˜Ÿä¼çš„æ•°ç›®ï¼Œå°½é‡çš„å½¢æˆåˆ—é˜Ÿ
+    ///// </summary>
+    //private void TeamOrdering(Vector3 destination_targetPosition) {
+    //    // å‡è®¾ maxUnits æ˜¯æ¯ä¸ªé˜Ÿä¼çš„æœ€å¤§å•ä½æ•°
+    //    int unitCount = playerSelectedUnits.Count; // åˆå§‹å•ä½æ•°é‡ç­‰äºŽå·²é€‰ä¸­åˆ—è¡¨ä¸­çš„å•ä½æ•°é‡
+    //    int rows = Mathf.CeilToInt(Mathf.Sqrt(unitCount / maxUnits)); // è®¡ç®—è¡Œæ•°
+    //    int cols = Mathf.CeilToInt(unitCount / (float)rows); // è®¡ç®—åˆ—æ•°
+
+
+    //    for (int i = 0; i < unitCount; i++)
+    //    {
+    //        int row = i / cols; // è®¡ç®—å•ä½æ‰€åœ¨çš„è¡Œç´¢å¼•
+    //        int col = i % cols; // è®¡ç®—å•ä½æ‰€åœ¨çš„åˆ—ç´¢å¼•
+
+    //        float posX = col * offsetX; // è®¡ç®—å•ä½çš„æ°´å¹³ä½ç½®
+    //        float posZ = row * offsetZ; // è®¡ç®—å•ä½çš„åž‚ç›´ä½ç½®
+
+    //        // è®¾ç½®å•ä½çš„ç›®æ ‡ä½ç½®ä¸ºåˆ—é˜Ÿçš„ä½ç½®
+    //        Vector3 targetPosition = new Vector3(posX, 0f, posZ) + destination_targetPosition;
+    //        playerSelectedUnits[i].MoveToWardTargetTrigger(targetPosition);
+    //    }
+    //}
+
+    /// <summary>
+    /// åˆ—é˜Ÿå‰è¡Œçš„ä¸»è¦åŠŸèƒ½
+    /// è®¡ç®—é˜Ÿä¼çš„æ•°ç›®ï¼Œå°½é‡çš„å½¢æˆåˆ—é˜Ÿ
+    /// </summary>
+    private void TeamOrdering(Vector3 destination_targetPosition)
+    {
+        int rows = Mathf.CeilToInt(Mathf.Sqrt(playerSelectedUnits.Count)); // è®¡ç®—è¡Œæ•°
+        int cols = rows; // åˆ—æ•°ä¸Žè¡Œæ•°ç›¸ç­‰
+
+        for (int i = 0; i < playerSelectedUnits.Count; i++)
+        {
+            int row = i / cols; // è®¡ç®—å•ä½æ‰€åœ¨çš„è¡Œç´¢å¼•
+            int col = i % cols; // è®¡ç®—å•ä½æ‰€åœ¨çš„åˆ—ç´¢å¼•
+
+            float posX = col * offsetX; // è®¡ç®—å•ä½çš„æ°´å¹³ä½ç½®
+            float posZ = row * offsetZ; // è®¡ç®—å•ä½çš„åž‚ç›´ä½ç½®
+
+            // è®¾ç½®å•ä½çš„ç›®æ ‡ä½ç½®ä¸ºåˆ—é˜Ÿçš„ä½ç½®
+            Vector3 targetPosition = new Vector3(posX, 0f, posZ) + destination_targetPosition;
+            playerSelectedUnits[i].MoveToWardTargetTrigger(targetPosition);
+        }
+
+    }
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” Unity æ–¹æ³• â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
     private void Start()
     {
@@ -570,7 +618,7 @@ public class PlayerControl : MonoBehaviour
         if (isRecordingMousePosition)
         {
 
-            // »æÖÆ¿òÑ¡¾ØÐÎ
+            // ç»˜åˆ¶æ¡†é€‰çŸ©å½¢
             screenSelectRect = GetScreenRect(eventClickPosition, Input.mousePosition);
             GUI.Box(screenSelectRect, "");
 

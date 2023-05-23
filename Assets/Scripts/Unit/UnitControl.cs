@@ -69,14 +69,21 @@ public class UnitControl : MonoBehaviour
     /// </summary>
     /// <param name="targetPosition"></param>
     protected void RotateToTarget() {
+
         // 获取目标方向向量
         targetDirection = agent.destination - agent.transform.position;
 
         // 计算目标旋转角度
         targetRotation = Quaternion.LookRotation(targetDirection);
 
+        // 创建限制后的欧拉角
+        Vector3 limitedRotation = new Vector3(0, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
+
+        // 将限制后的欧拉角转换为旋转角度
+        Quaternion limitedQuaternion = Quaternion.Euler(limitedRotation);
+
         // 使用插值方法逐渐将物体旋转到目标方向
-        agent.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, agent.angularSpeed * Time.deltaTime);
+        agent.transform.rotation = Quaternion.RotateTowards(transform.rotation, limitedQuaternion, agent.angularSpeed * Time.deltaTime);
 
     }
 
