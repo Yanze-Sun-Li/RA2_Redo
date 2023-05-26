@@ -135,6 +135,7 @@ public class PlayerControl : MonoBehaviour
             //如果当前并没有正在进行的鼠标事件判定，现在开始记录事件的开始。
             if (!isPerformingAction)
             {
+                RecordingClickPosition_OnScreen();
                 // Debug.log("你已经按下左键，事件开始记录。");
                 StartRecordingLeftMouseEvent();
                 //记录鼠标按压的时间
@@ -170,7 +171,7 @@ public class PlayerControl : MonoBehaviour
         isPerformingAction = true;
         timeRecord = Time.time;
         // Debug.log("事件的开始时间是：" + timeRecord);
-        RecordingClickPosition_OnScreen();
+        //RecordingClickPosition_OnScreen();
     }
 
     /// <returns>是否按下左键按钮？</returns>
@@ -252,8 +253,12 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
-                    //Attack();
-                    Debug.Log("攻击指定目标！ " + unit.name);
+                    foreach (UnitControl selectedUnits in playerSelectedUnits)
+                    {
+                        selectedUnits.enemyUnitTarget = selectedUnits;
+                        selectedUnits.AttackLogic();
+                    }
+                    Debug.Log("攻击指定目标！" + unit.name);
                 }
             }
             else if (isHitGround)
