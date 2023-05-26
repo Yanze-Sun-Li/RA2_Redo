@@ -137,10 +137,17 @@ public class UnitControl : MonoBehaviour
     protected float attackCD = 0.3f;
     protected bool readyToAttack = true;
 
-
+    /// <summary>
+    /// 设置一个攻击的目标。
+    /// </summary>
+    /// <param name="enemy">即将进行攻击的目标</param>
+    public void SetEnemy(UnitControl enemy) {
+        enemyUnitTarget = enemy;
+    }
 
     /// <summary>
-    ///  向着目标方向进行攻击的主逻辑
+    ///  向着目标方向进行攻击的主逻辑。
+    ///  在使用该方法之前，请先使用SetEnemy()或enemyUnitTarget设置目标！
     /// </summary>
     /// <param name="targetLocation">目标的位置</param>
     public virtual void AttackLogic() {
@@ -266,7 +273,7 @@ public class UnitControl : MonoBehaviour
         }
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (enemyLocated)
         {

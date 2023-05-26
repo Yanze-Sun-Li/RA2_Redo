@@ -41,256 +41,57 @@ public class PlayerControl : MonoBehaviour
      * 如果玩家在规定时间内双击，对所有的已选定单位发出指令。
      * 如果玩家在规定时间内长按，进行框选行为。
      */
-    //------------------用于计算时间纪录的变量和方法列表如下----------------------
-    float timeRecord = -1;
-    //规定的时间判定间隔
-    [SerializeField]
-    private float timeLimitation = .3f;
-    bool isPerformingAction = false;
-
-    float timeHoldingRecord = -1;
-    [SerializeField]
-    private float timeLimitation_Holding = .2f;
-
-    /// <summary>
-    /// 当前左键鼠标事件的计时器，正在进行的事件是否超时？
-    /// 注意：当按住的时候，提前结束事件。
-    /// </summary>
-    private void LeftMouseActionsTimer()
-    {
-        if (isPerformingAction)
+    protected void LeftMouseButtonActionDetection() {
+        if (Input.GetMouseButtonDown(0))
         {
-            //如果还在既定的时间以内
-            if (Time.time - timeRecord < timeLimitation && timeRecord != -1)
-            {
-                
-            }// 如果已经超过了规定的时间限制
-            else if (Time.time - timeRecord > timeLimitation && timeRecord != -1)
-            {
-                // Debug.log("时间结束！");
-                EndLeftMouseActions();
-                return;
-            }
-
-            // 如果长按的时间超过了规定时间限制
-            if (Time.time - timeHoldingRecord > timeLimitation_Holding && timeHoldingRecord != -1)
-            {
-                // Debug.log("长按的时间结束！");
-                EndLeftMouseActions();
-                return;
-            }
-            
-        }
-    }
-
-    //______________________玩家鼠标左键检测相关的代码____________________________________________
-
-    /// <summary>
-    /// 当鼠标左键事件结束之后...
-    /// </summary>
-    private void EndLeftMouseActions()
-    {
-        //在事件结束之后，对玩家进行的事件进行判定，玩家进行了单击，还是双击？又或者是长按？
-        DetermineLeftMouseAction();
-
-        if (ifLeftButtonSingleClickedEvent)
-        {
-            LeftSingleClickAction();
-            ifLeftButtonSingleClickedEvent = false;
-        } else if (ifLeftButtonDoubleClickedEvent)
-        {
-            LeftDoubleClickAction();
-            ifLeftButtonDoubleClickedEvent = false;
-        } else if (ifLeftButtonLongPressEvent) {
-            //如果想要代码在左键长按事件出现时被触发，请将代码放在以下方法里。
-            LeftLongPressAction();
-            ifLeftButtonLongPressEvent = false;
-        }
-
-        //将所有相关的变量更改为默认值
-        LeftButtonCountersRenew();
-    }
-    //------------------用于检测鼠标左键事件的变量和方法列表如下：-------------
-    int leftButtonDownCounter = 0;
-    int leftButtonUpCounter = 0;
-
-    //检测是否正在左键长按鼠标
-    bool ifLeftButtonLongPressing = false;
-    //检测是否要触发左键长按事件
-    bool ifLeftButtonLongPressEvent = false;
-    
-    bool ifLeftButtonSingleClickedEvent = false;
-    bool ifLeftButtonDoubleClickedEvent = false;
-
-
-    /// <summary>
-    /// 检测鼠标左键产生的事件
-    /// </summary>
-    void LeftMouseActions() 
-    {
-        //如果鼠标左键按下了
-        if (LeftButtonDown()) {
-            leftButtonDownCounter++;
-            ifLeftButtonLongPressing = true;
-            //如果当前并没有正在进行的鼠标事件判定，现在开始记录事件的开始。
-            if (!isPerformingAction)
+            //如果玩家已选择单位，不再检测框选。
+            if (playerSelectedUnits.Count > 0)
             {
                 RecordingClickPosition_OnScreen();
-                // Debug.log("你已经按下左键，事件开始记录。");
-                StartRecordingLeftMouseEvent();
-                //记录鼠标按压的时间
-                timeHoldingRecord = Time.time;
-            }
-            else 
-            {
-            
-            }
-        }
-        //如果鼠标左键抬起了
-        if (LeftButtonUp())
-        {
-            ifLeftButtonLongPressing = false;
-            if (isPerformingAction) 
-            {
-                leftButtonUpCounter++;
-            }
-            if (isRecordingMousePosition)
-            {
-                RecordingReleaseMousePosion_OnScreen();
-                LeftLongPressActionOnFinish();
-                isRecordingMousePosition = false;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 当鼠标左键开始了一个事件的时候
-    /// </summary>
-    private void StartRecordingLeftMouseEvent()
-    {
-        isPerformingAction = true;
-        timeRecord = Time.time;
-        // Debug.log("事件的开始时间是：" + timeRecord);
-        //RecordingClickPosition_OnScreen();
-    }
-
-    /// <returns>是否按下左键按钮？</returns>
-    private bool LeftButtonDown()
-    {
-        return Input.GetMouseButtonDown(0);
-    }
-
-    /// <returns>是否抬起左键按钮？</returns>
-    private bool LeftButtonUp()
-    {
-        return Input.GetMouseButtonUp(0);
-    }
-
-    /// <summary>
-    /// 重制所有与左键事件相关的变量，到最初的初始状态
-    /// </summary>
-    private void LeftButtonCountersRenew() 
-    {
-        leftButtonDownCounter = 0;
-        leftButtonUpCounter = 0;
-        timeRecord = -1;
-        isPerformingAction = false;
-        timeHoldingRecord = -1;
-    }
-
-
-
-    //------------------用于判断所进行的鼠标左键事件类型的变量和方法列表如下：-------------
-    /// <summary>
-    /// 玩家在时间限制内，执行了怎样的事件？
-    /// </summary>
-    private void DetermineLeftMouseAction()
-    {
-        if (leftButtonDownCounter == 1 && leftButtonUpCounter == 1)
-        {
-            ifLeftButtonSingleClickedEvent = true;
-        }
-        // 注： 我在这里设定，如果在规定时间以内点击次数等于，或者超过2次，我都设置为了双击。
-        else if (leftButtonDownCounter >= 2 && leftButtonDownCounter == leftButtonUpCounter)
-        {
-            ifLeftButtonDoubleClickedEvent = true;
-        } else if (leftButtonUpCounter == 0) {
-            ifLeftButtonLongPressEvent = true;
-        }
-    }
-    /// <summary>
-    /// 鼠标左键单击事件被检测到的时候
-    /// </summary>
-    private void LeftSingleClickAction()
-    {
-        // Debug.log("检测到鼠标左键单击。");
-
-        if (playerSelectedUnits.Count == 0)
-        {
-            ResetHitValue();
-            UnitControl unit = ReturnHitUnit();
-            if (isHitUnit)
-            {
-                if (unit.playerID == playerID)
+                ReturnHitGroundPosition();
+                UnitControl unit = ReturnHitUnit();
+                if (isHitUnit)
                 {
-                    playerSelectedUnits.Add(unit);
+                    if (unit.playerID != playerID)
+                    {
+                        //敌方单位
+                        foreach (UnitControl unitControl in playerSelectedUnits)
+                        {
+                            unitControl.SetEnemy(unit);
+                            unitControl.AttackLogic();
+                        }
+                    }
+                    else
+                    {
+                        UnitMoving();
+                    }
                 }
-            }
-        }
-        else if (playerSelectedUnits.Count > 0)
-        {
-            ResetHitValue();
-            //————————————————这个地方有进行优化的空间，但是由于时间关系，这里暂且先不做调整————————————————————
-            //会再次重复的发出raycast，但是由于数目极小，对性能影响微弱，暂且不做调整
-            UnitControl unit = ReturnHitUnit();
-            Vector3 position = ReturnHitGroundPosition();
-            if (isHitUnit)
-            {
-                if (unit.playerID == playerID)
+                else if (isHitGround)
                 {
-                    //如果击中地面，要求目标移动到指定位置。
+                    //友方单位
                     UnitMoving();
                 }
-                else
-                {
-                    foreach (UnitControl selectedUnits in playerSelectedUnits)
-                    {
-                        selectedUnits.enemyUnitTarget = selectedUnits;
-                        selectedUnits.AttackLogic();
-                    }
-                    Debug.Log("攻击指定目标！" + unit.name);
-                }
+
+                ResetHitValue();
+
+
+                return;
             }
-            else if (isHitGround)
+            //如果玩家未选择单位，主动检测框选。
+            else
             {
-                UnitMoving();
+                RecordingClickPosition_OnScreen();
+                isRecordingMousePosition = true;
             }
         }
-        else {
-            Debug.LogError("Player selected units amount should not under 0! 玩家已选择的单位数目不应该低于0！");
+        else if (Input.GetMouseButtonUp(0))
+        {
+            RecordingReleaseMousePosion_OnScreen();
+            isRecordingMousePosition = false;
+            BoxSelecting();
         }
+    }
 
-    }
-    /// <summary>
-    /// 鼠标左键双击事件被检测到的时候
-    /// </summary>
-    private void LeftDoubleClickAction()
-    {
-        // Debug.log("检测到鼠标左键双击。");
-    }
-    /// <summary>
-    /// 鼠标左键长按事件被检测到的时候
-    /// </summary>
-    private void LeftLongPressAction()
-    {
-        // Debug.log("检测到鼠标左键长按。");
-        isRecordingMousePosition = true;
-
-    }
-    private void LeftLongPressActionOnFinish() 
-    {
-        BoxSelecting();
-    }
 
     //______________________框选功能的代码____________________________________________
     [SerializeField]
@@ -402,6 +203,9 @@ public class PlayerControl : MonoBehaviour
 
     //—————————————————————————————————————————————————————— 左键行为 ——————————————————————————————————————————
     //指示单位向着目标方向前进。
+    /// <summary>
+    /// 让队伍的所有选中坦克前往指定地点。
+    /// </summary>
     private void UnitMoving() {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -459,7 +263,7 @@ public class PlayerControl : MonoBehaviour
     /// <summary>
     /// 返回当前鼠标位置在游戏的世界内代表的Vector3 Postion位置数值。
     /// 注意：不是屏幕上鼠标位置，而是游戏世界内此时鼠标所指位置。 
-    /// 注意：如果集中地面，isHitGround会显示为True
+    /// 注意：如果击中地面，标签名为“Ground”，isHitGround会显示为True
     /// </summary>
     /// <returns>当前鼠标在游戏世界里的地面位置</returns>
     Vector3 ReturnHitGroundPosition()
@@ -499,7 +303,7 @@ public class PlayerControl : MonoBehaviour
     /// <summary>
     /// 返回当前鼠标位置在游戏的世界内代表的Vector3 Postion位置数值。
     /// 注意：不是屏幕上鼠标位置，而是游戏世界内此时鼠标所指位置。 
-    /// 注意：如果集中地面，isHitGround会显示为True
+    /// 注意：如果击中地面，isHitUnit会显示为True
     /// </summary>
     /// <returns>当前鼠标在游戏世界里的地面位置</returns>
     UnitControl ReturnHitUnit()
@@ -613,8 +417,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void Update()
     {
-        LeftMouseActions();
-        LeftMouseActionsTimer();
+        LeftMouseButtonActionDetection();
         RightMouseActions();
     }
 

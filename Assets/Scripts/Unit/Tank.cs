@@ -98,7 +98,7 @@ namespace Assets.Scripts.Unit
 
         }
 
-        protected void FixedUpdate()
+        protected override void FixedUpdate()
         {
             base.FixedUpdate();
             if (isAutoRotating && !lockOnTarget)
