@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
      */
 
     [SerializeField]
-    private List<UnitControl> playerUnits;
+    protected  List<UnitControl> playerUnits;
 
     /*
      * ——————————————————————重要信息，玩家如何在出场时正确判断自己的部队——————————————————————————————————————————
@@ -33,7 +33,13 @@ public class PlayerControl : MonoBehaviour
     
     [Header("Debug信息")]
     [SerializeField]
-    private List<UnitControl> playerSelectedUnits;
+    protected  List<UnitControl> playerSelectedUnits;
+
+    //时间闸：用于阻止单击和托选的冲突判定，当单击之后，如果停滞时间超过0.1s，则仅用于单选。
+    [SerializeField]
+    protected float click_press_time_different = .2f;
+
+    protected float time_record = -1;
 
     //______________________玩家鼠标左键相关的代码____________________________________________
     /* 在一定的时间内，计算按下和抬起的数目，使用判断方法在事件结束之后，给出玩家进行了怎样的行为。
@@ -47,6 +53,8 @@ public class PlayerControl : MonoBehaviour
             //如果玩家已选择单位，不再检测框选。
             if (playerSelectedUnits.Count > 0)
             {
+                Debug.Log("Already selected, no box select action performing.");
+                time_record = Time.time;
                 RecordingClickPosition_OnScreen();
                 ReturnHitGroundPosition();
                 UnitControl unit = ReturnHitUnit();
@@ -68,7 +76,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 else if (isHitGround)
                 {
-                    //友方单位
+                    
                     UnitMoving();
                 }
 
@@ -80,12 +88,19 @@ public class PlayerControl : MonoBehaviour
             //如果玩家未选择单位，主动检测框选。
             else
             {
+                Debug.Log("nothing selected, box select action performing.");
                 RecordingClickPosition_OnScreen();
                 isRecordingMousePosition = true;
             }
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            //当鼠标按下和松开的时间超过0.1s的时间闸，框选，否则点选。
+            if (Time.time - time_record < click_press_time_different)
+            {
+                return;
+            }
+
             RecordingReleaseMousePosion_OnScreen();
             isRecordingMousePosition = false;
             BoxSelecting();
@@ -99,7 +114,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     Vector3 eventReleasePosition;
     [SerializeField]
-    private Camera mainCamera;
+    protected  Camera mainCamera;
     bool isRecordingMousePosition = false;
     public LayerMask unitLayer; // 单位的图层
     [SerializeField]
@@ -152,7 +167,7 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     /// <param name="position">当前物体的位置信息</param>
     /// <returns>返回当前的单位是否在玩家的框选范围之内</returns>
-    private bool UnitInTheArea(Vector3 position)
+    protected  bool UnitInTheArea(Vector3 position)
     {
         if (InSelectArea(position))
         {
@@ -170,7 +185,7 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     /// <param name="onCameraPosition">给予位置</param>
     /// <returns>是否在框选的位置之内？</returns>
-    private bool InSelectArea(Vector3 onCameraPosition)
+    protected  bool InSelectArea(Vector3 onCameraPosition)
     {
         //Debug.log(ConvertToScreenPosition(onCameraPosition));
         return screenSelectRect.Contains(ConvertToScreenPosition(onCameraPosition));
@@ -193,7 +208,7 @@ public class PlayerControl : MonoBehaviour
     /// <param name="startPos">从什么地方开始画？</param>
     /// <param name="endPos">从什么地方结束？</param>
     /// <returns></returns>
-    private Rect GetScreenRect(Vector3 startPos, Vector3 endPos)
+    protected  Rect GetScreenRect(Vector3 startPos, Vector3 endPos)
     {
         // 计算矩形的左上角位置和宽高
         Vector2 min = Vector2.Min(startPos, endPos);
@@ -206,7 +221,7 @@ public class PlayerControl : MonoBehaviour
     /// <summary>
     /// 让队伍的所有选中坦克前往指定地点。
     /// </summary>
-    private void UnitMoving() {
+    protected  void UnitMoving() {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -238,7 +253,7 @@ public class PlayerControl : MonoBehaviour
     /// <summary>
     /// 当检测到鼠标右键活动之后，激活该方法。
     /// </summary>
-    private void RightSingleClickAction()
+    protected  void RightSingleClickAction()
     {
         playerSelectedUnits.Clear();
     }
@@ -344,7 +359,7 @@ public class PlayerControl : MonoBehaviour
     /// <summary>
     /// 重置击中判断变量为初始false状态。
     /// </summary>
-    private void ResetHitValue() 
+    protected  void ResetHitValue() 
     {
         isHitBuilding = false;
         isHitGround= false;
@@ -360,7 +375,7 @@ public class PlayerControl : MonoBehaviour
     ///// 列队前行的主要功能
     ///// 计算队伍的数目，尽量的形成列队
     ///// </summary>
-    //private void TeamOrdering(Vector3 destination_targetPosition) {
+    //protected  void TeamOrdering(Vector3 destination_targetPosition) {
     //    // 假设 maxUnits 是每个队伍的最大单位数
     //    int unitCount = playerSelectedUnits.Count; // 初始单位数量等于已选中列表中的单位数量
     //    int rows = Mathf.CeilToInt(Mathf.Sqrt(unitCount / maxUnits)); // 计算行数
@@ -385,7 +400,7 @@ public class PlayerControl : MonoBehaviour
     /// 列队前行的主要功能
     /// 计算队伍的数目，尽量的形成列队
     /// </summary>
-    private void TeamOrdering(Vector3 destination_targetPosition)
+    protected  void TeamOrdering(Vector3 destination_targetPosition)
     {
         int rows = Mathf.CeilToInt(Mathf.Sqrt(playerSelectedUnits.Count)); // 计算行数
         int cols = rows; // 列数与行数相等
@@ -406,7 +421,7 @@ public class PlayerControl : MonoBehaviour
     }
     //—————————————————————————————————————————————————————— Unity 方法 ——————————————————————————————————————————
 
-    private void Start()
+    protected  void Start()
     {
         mainCamera = Camera.main;
         if (playerUnits.Count == 0)
@@ -415,13 +430,13 @@ public class PlayerControl : MonoBehaviour
         }
         playerSelectedUnits = new List<UnitControl>();
     }
-    private void Update()
+    protected  void Update()
     {
         LeftMouseButtonActionDetection();
         RightMouseActions();
     }
 
-    private void OnGUI()
+    protected  void OnGUI()
     {
         if (isRecordingMousePosition)
         {

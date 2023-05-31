@@ -122,8 +122,11 @@ public class UnitControl : MonoBehaviour
     //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¹¥»÷ÐÐÎª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
     //Attack Variables ¹¥»÷Ïà¹Ø±äÁ¿
     //¹¥»÷¾àÀë
+    [SerializeField]
     protected float attackRange = 10f;
+    [SerializeField]
     protected float attackDamage = 5f;
+    [SerializeField]
     protected bool attackEnemy = false;
     //Enemy Located
     //·¢ÏÖµÐ¾ü
@@ -172,7 +175,7 @@ public class UnitControl : MonoBehaviour
     /// <returns>ÊÇ·ñÔÚ¹¥»÷·¶Î§Ö®ÄÚ£¿</returns>
     protected bool InAttackRange(Vector3 targetLocation) {
 
-        if (Vector3.Distance(agent.transform.position, targetLocation) > attackRange)
+        if (Vector3.Distance(agent.transform.position, targetLocation) < attackRange)
         {
             return true;
         }
