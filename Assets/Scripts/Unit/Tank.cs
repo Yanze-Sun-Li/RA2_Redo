@@ -74,6 +74,8 @@ namespace Assets.Scripts.Unit
             Vector3 _targetLocation = enemyUnitTarget.transform.position;
             if (InAttackRange(_targetLocation))
             {
+                Debug.Log("Stop Movement!");
+                StopMovement();
                 Debug.Log("目标在攻击距离之内，进行攻击！");
                 //坦克类的在攻击时，在炮塔上的旋转功能
                 LockOnTarget();

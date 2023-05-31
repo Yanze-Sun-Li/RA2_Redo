@@ -157,6 +157,9 @@ public class UnitControl : MonoBehaviour
         Vector3 targetLocation = enemyUnitTarget.transform.position;
         if (InAttackRange(targetLocation))
         {
+            Debug.Log("Stop Movement!");
+            StopMovement();
+
             //坦克类的在攻击时，在炮塔上的旋转功能
             //LockOnTarget(targetLocation);
             StartFireTrigger();
@@ -165,6 +168,14 @@ public class UnitControl : MonoBehaviour
         {
             MoveCloser(targetLocation);
         }
+    }
+
+    /// <summary>
+    /// 立刻急刹车
+    /// </summary>
+    protected void StopMovement()
+    {
+        agent.SetDestination(transform.position);
     }
 
 
