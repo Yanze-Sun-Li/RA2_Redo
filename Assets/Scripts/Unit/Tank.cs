@@ -100,13 +100,13 @@ namespace Assets.Scripts.Unit
             {
                 if (Vector3.Distance(enemyUnitTarget.getPosition(), agent.transform.position) > attackRange)
                 {
-                    Debug.Log("移动目标超出距离的攻击距离，停止炮管锁定");
+                    //Debug.Log("移动目标超出距离的攻击距离，停止炮管锁定");
                     lockOnTarget = false;
                 }
                 else
                 {
-                    Debug.Log(Vector3.Distance(enemyUnitTarget.getPosition(), componentListOnTower[0].position));
-                    Debug.Log("移动目标未超出距离的攻击距离，持续炮管锁定");
+                    //Debug.Log(Vector3.Distance(enemyUnitTarget.getPosition(), componentListOnTower[0].position));
+                    //Debug.Log("移动目标未超出距离的攻击距离，持续炮管锁定");
                     lockOnTarget = true;
                 }
             }
