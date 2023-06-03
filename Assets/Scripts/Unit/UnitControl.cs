@@ -40,6 +40,7 @@ public class UnitControl : MonoBehaviour
         Debug.Log("Moving toward target position: " + _targetPosition);
         forceGoToDestination = true;
         targetPosition = _targetPosition;
+        attackSelectedTarget = false;
         agent.SetDestination(targetPosition);
         //如果没有开启必须旋转后移动：
         if (!enableRotateBeforeMove)
@@ -145,11 +146,13 @@ public class UnitControl : MonoBehaviour
 
     //攻击冷却时间
     [SerializeField]
-    protected float attackCD = 0.3f;
+    protected float attackCD = 1.3f;
     protected bool readyToAttack = true;
 
     //是否强制移动到目标区域
     protected bool forceGoToDestination = false;
+    //是否自动追逐
+    protected bool autoChase = false;
 
     /// <summary>
     /// 设置一个攻击的目标。
@@ -169,7 +172,7 @@ public class UnitControl : MonoBehaviour
     /// <summary>
     /// 放弃攻击指定目标
     /// </summary>
-    protected void GiveUpAttack()
+    protected virtual void GiveUpAttack()
     {
         attackSelectedTarget = false;
     }
@@ -182,7 +185,12 @@ public class UnitControl : MonoBehaviour
         if (readyToAttack)
         {
             readyToAttack = false;
-            Attack();
+            if (attackSelectedTarget)
+            {
+                Attack(enemyUnitTarget); 
+
+            }
+
             StartCoroutine("AttackCDCounter");
         }
         else
@@ -196,7 +204,7 @@ public class UnitControl : MonoBehaviour
     /// </summary>
     public void StopMovement()
     {
-        agent.SetDestination(transform.position);
+        agent.ResetPath();
     }
 
 
@@ -219,8 +227,8 @@ public class UnitControl : MonoBehaviour
     /// <summary>
     /// 对敌方单位造成伤害。
     /// </summary>
-    protected void Attack() {
-        Debug.Log("Attack Target.");
+    protected void Attack(UnitControl target) {
+        target.UnderAttack(attackDamage);
     }
 
     IEnumerator AttackCDCounter() {
@@ -229,9 +237,10 @@ public class UnitControl : MonoBehaviour
     }
 
     //移动到攻击范围内最近点
-    protected void MoveCloser(Vector3 targetLocation)
+    protected void MoveCloser(Vector3 _targetLocation)
     {
-        Debug.Log("Move Closer");
+        agent.SetDestination(_targetLocation);
+        autoChase = true;
     }
 
     //停止强制前往目标地点的Trigger
@@ -316,6 +325,17 @@ public class UnitControl : MonoBehaviour
         if (enemyUnitTarget != null)
         {
             enemyUnitTargetPosition = enemyUnitTarget.transform.position;
+        }
+
+        if (autoChase)
+        {
+            if (InAttackRange(enemyUnitTargetPosition))
+            {
+                Debug.Log("停止！");
+                agent.SetDestination(agent.transform.position);
+                StopMovement();
+                autoChase = false;
+            }
         }
 
         CancelForceGoTo();

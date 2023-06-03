@@ -78,25 +78,34 @@ namespace Assets.Scripts.Unit
             base.AttackLogicTrigger();
         }
 
+        protected override void GiveUpAttack()
+        {
+            LockOnTargetOffTrigger();
+            base.GiveUpAttack();
+        }
 
-        private void LockOnTargetTrigger()
+        protected void LockOnTargetTrigger()
         {
             lockOnTarget = true;
         }
+        protected void LockOnTargetOffTrigger()
+        {
+            lockOnTarget = false;
+        }
 
-        private void DetectTargetNear() {
+        protected void DetectTargetNear() {
             if (enemyUnitTarget != null)
             {
                 if (Vector3.Distance(enemyUnitTarget.getPosition(), agent.transform.position) > attackRange)
                 {
                     //Debug.Log("移动目标超出距离的攻击距离，停止炮管锁定");
-                    lockOnTarget = false;
+                    LockOnTargetOffTrigger();
                 }
                 else
                 {
                     //Debug.Log(Vector3.Distance(enemyUnitTarget.getPosition(), componentListOnTower[0].position));
                     //Debug.Log("移动目标未超出距离的攻击距离，持续炮管锁定");
-                    lockOnTarget = true;
+                    LockOnTargetTrigger();
                 }
             }
         }

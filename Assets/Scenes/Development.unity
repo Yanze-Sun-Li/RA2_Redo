@@ -132,6 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
+      propertyPath: attackCD
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
       propertyPath: playerID
       value: 1
       objectReference: {fileID: 0}
@@ -409,6 +414,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Units
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
+      propertyPath: attackCD
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
@@ -716,6 +726,7 @@ MonoBehaviour:
   attackDamage: 5
   attackEnemy: 0
   enemyUnitTarget: {fileID: 0}
+  autoResponseTarget: {fileID: 0}
   attackCD: 0.3
 --- !u!135 &376940720
 SphereCollider:
@@ -1131,6 +1142,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
+      propertyPath: attackCD
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
       propertyPath: playerID
       value: 1
       objectReference: {fileID: 0}
@@ -1503,6 +1519,7 @@ MonoBehaviour:
   attackDamage: 5
   attackEnemy: 0
   enemyUnitTarget: {fileID: 0}
+  autoResponseTarget: {fileID: 0}
   attackCD: 0.3
 --- !u!135 &1078341832
 SphereCollider:
@@ -2135,6 +2152,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
+      propertyPath: attackCD
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
       propertyPath: playerID
       value: 1
       objectReference: {fileID: 0}
@@ -2432,6 +2454,7 @@ MonoBehaviour:
   attackDamage: 5
   attackEnemy: 0
   enemyUnitTarget: {fileID: 0}
+  autoResponseTarget: {fileID: 0}
   attackCD: 0.3
 --- !u!135 &1592134773
 SphereCollider:
@@ -2577,6 +2600,7 @@ MonoBehaviour:
   attackDamage: 5
   attackEnemy: 0
   enemyUnitTarget: {fileID: 0}
+  autoResponseTarget: {fileID: 0}
   attackCD: 0.3
 --- !u!135 &1946976471
 SphereCollider:
@@ -3012,6 +3036,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
         type: 3}
+      propertyPath: attackCD
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176052702286227947, guid: b6e20a79d95bb844bbd4a14c90f2f4dc,
+        type: 3}
       propertyPath: playerID
       value: 1
       objectReference: {fileID: 0}
@@ -3103,6 +3132,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
+        type: 3}
+      propertyPath: attackCD
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3418960506632839775, guid: 73aa9aa78b93e0346960efd8a3e29ce7,
         type: 3}
       propertyPath: playerID
