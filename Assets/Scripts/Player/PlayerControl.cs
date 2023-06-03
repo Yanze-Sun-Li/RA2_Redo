@@ -67,7 +67,7 @@ public class PlayerControl : MonoBehaviour
                         {
                             unitControl.StopMovement();
                             unitControl.SetEnemy(unit);
-                            unitControl.AttackLogic();
+                            unitControl.AttackLogicTrigger();
                         }
                     }
                     else

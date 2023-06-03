@@ -38,6 +38,7 @@ public class UnitControl : MonoBehaviour
     /// <param name="targetPosition">目标位置</param>
     public virtual void MoveToWardTargetTrigger(Vector3 _targetPosition) {
         Debug.Log("Moving toward target position: " + _targetPosition);
+        forceGoToDestination = true;
         targetPosition = _targetPosition;
         agent.SetDestination(targetPosition);
         //如果没有开启必须旋转后移动：
@@ -133,14 +134,22 @@ public class UnitControl : MonoBehaviour
     //Enemy Located
     //发现敌军
     protected bool enemyLocated = false;
+    //是否开始攻击？
+    protected bool attackSelectedTarget = false;
     //目前仅支持对敌方移动单位造成攻击。
     public UnitControl enemyUnitTarget;
+    protected Vector3 enemyUnitTargetPosition;
+
+    public UnitControl autoResponseTarget;
     //--待完善， 当前时间内无对地方建筑单位进行攻击的reference。
 
     //攻击冷却时间
     [SerializeField]
     protected float attackCD = 0.3f;
     protected bool readyToAttack = true;
+
+    //是否强制移动到目标区域
+    protected bool forceGoToDestination = false;
 
     /// <summary>
     /// 设置一个攻击的目标。
@@ -154,16 +163,31 @@ public class UnitControl : MonoBehaviour
     ///  向着目标方向进行攻击的主逻辑。
     ///  在使用该方法之前，请先使用SetEnemy()或enemyUnitTarget设置目标！
     /// </summary>
-    /// <param name="targetLocation">目标的位置</param>
-    public virtual void AttackLogic() {
-        Vector3 targetLocation = enemyUnitTarget.transform.position;
-        if (InAttackRange(targetLocation))
+    public virtual void AttackLogicTrigger() {
+        attackSelectedTarget = true;
+    }
+    /// <summary>
+    /// 放弃攻击指定目标
+    /// </summary>
+    protected void GiveUpAttack()
+    {
+        attackSelectedTarget = false;
+    }
+
+    /// <summary>
+    ///  需要将这个部分放在Update中，才会持续的判断是否应该进行攻击。
+    ///  在使用该方法之前，请先使用SetEnemy()或enemyUnitTarget设置目标！
+    /// </summary>
+    public void AttackLogicUpdate() {
+        if (readyToAttack)
         {
-            Debug.Log("在距离之内");
+            readyToAttack = false;
+            Attack();
+            StartCoroutine("AttackCDCounter");
         }
         else
         {
-            Debug.Log("在距离之外");
+            return;
         }
     }
 
@@ -183,7 +207,7 @@ public class UnitControl : MonoBehaviour
     /// <returns>是否在攻击范围之内？</returns>
     protected bool InAttackRange(Vector3 targetLocation) {
 
-        if (Vector3.Distance(agent.transform.position, targetLocation) < attackRange)
+        if (Vector3.Distance(targetLocation,agent.transform.position) < attackRange)
         {
             return true;
         }
@@ -208,6 +232,16 @@ public class UnitControl : MonoBehaviour
     protected void MoveCloser(Vector3 targetLocation)
     {
         Debug.Log("Move Closer");
+    }
+
+    //停止强制前往目标地点的Trigger
+    protected void CancelForceGoTo()
+    {
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        {
+            // NavMesh Agent已经抵达目标位置
+            forceGoToDestination = false;
+        }
     }
 
 
@@ -237,6 +271,24 @@ public class UnitControl : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
+        if (attackSelectedTarget) {
+            if (InAttackRange(enemyUnitTargetPosition))
+            {
+                AttackLogicUpdate();
+            }
+            else {
+                if (forceGoToDestination)
+                {
+
+                }
+                else {
+                    MoveCloser(enemyUnitTargetPosition);
+                }
+
+            }
+
+        }
+
 
     }
 
@@ -244,7 +296,7 @@ public class UnitControl : MonoBehaviour
     {
         if (enemyLocated)
         {
-            RotateToTarget(enemyUnitTarget.transform.position);
+            RotateToTarget(enemyUnitTargetPosition);
         }
         else if (isAutoRotating)
         {
@@ -259,6 +311,15 @@ public class UnitControl : MonoBehaviour
 
     }
 
+    protected void LateUpdate()
+    {
+        if (enemyUnitTarget != null)
+        {
+            enemyUnitTargetPosition = enemyUnitTarget.transform.position;
+        }
+
+        CancelForceGoTo();
+    }
 
 
 

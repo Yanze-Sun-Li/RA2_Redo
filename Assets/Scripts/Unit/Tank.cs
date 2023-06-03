@@ -72,26 +72,15 @@ namespace Assets.Scripts.Unit
         ///  向着目标方向进行攻击的主逻辑
         /// </summary>
         /// <param name="targetLocation">目标的位置</param>
-        public override void AttackLogic()
+        public override void AttackLogicTrigger()
         {
-            Debug.Log("攻击主逻辑开启。");
-            Vector3 _targetLocation = enemyUnitTarget.transform.position;
-            if (InAttackRange(_targetLocation))
-            {
-                Debug.Log("目标在攻击距离之内，进行攻击！");
-                //坦克类的在攻击时，在炮塔上的旋转功能
-                LockOnTargetTrigger();
-            }
-            else
-            {
-                Debug.Log("目标在攻击距离之外，移动到目标区域内进行攻击！");
-                LockOnTargetTrigger();
-            }
+            LockOnTargetTrigger();
+            base.AttackLogicTrigger();
         }
+
 
         private void LockOnTargetTrigger()
         {
-            //Debug.Log("向目标旋转炮管。");
             lockOnTarget = true;
         }
 
