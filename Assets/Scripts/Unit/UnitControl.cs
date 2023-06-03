@@ -14,8 +14,8 @@ public class UnitControl : MonoBehaviour
     //—————————————————————————属性类————————————————————————————————
     public int id;
     public int playerID;
-    public string name;
-    public string tag;
+    public string unit_name;
+    public string unit_tag;
     public float normalSpeed;
     
 
@@ -36,18 +36,19 @@ public class UnitControl : MonoBehaviour
     /// 对向着目标方向前进的方式进行判断
     /// </summary>
     /// <param name="targetPosition">目标位置</param>
-    public void MoveToWardTargetTrigger(Vector3 _targetPosition) {
+    public virtual void MoveToWardTargetTrigger(Vector3 _targetPosition) {
+        Debug.Log("Moving toward target position: " + _targetPosition);
         targetPosition = _targetPosition;
         agent.SetDestination(targetPosition);
         //如果没有开启必须旋转后移动：
         if (!enableRotateBeforeMove)
         {
-            Debug.Log("trying to moving!" + " Target: " + targetPosition);
+            //Debug.Log("trying to moving!" + " Target: " + targetPosition);
            
         }else
         //如果开启了必须旋转后移动，触发触发器。
         {
-            Debug.Log("trying to rotate before moving!" + " Target: " + targetPosition);
+            //Debug.Log("trying to rotate before moving!" + " Target: " + targetPosition);
             isAutoRotating = true;
             agent.speed = 0f;
         }
@@ -68,7 +69,7 @@ public class UnitControl : MonoBehaviour
     /// 在每帧中，都会将单位向着目标位置旋转一点。
     /// </summary>
     /// <param name="targetPosition">旋转向的目标位置</param>
-    protected void RotateToTarget(Vector3 targetPosition) {
+    protected virtual void RotateToTarget(Vector3 targetPosition) {
 
         // 获取目标方向向量
         targetDirection = targetPosition - agent.transform.position;
@@ -90,13 +91,14 @@ public class UnitControl : MonoBehaviour
     /// <summary>
     /// 当前的Agent物体是否正面向目标位置？
     /// </summary>
+    /// <param name="transform">目标位置</param>
     /// <returns></returns>
-    protected bool IfTowardTarget() {
+    protected bool IfTowardTarget(Transform _transform) {
         // 获取目标方向向量
-        targetDirection = agent.destination - agent.transform.position;
+        targetDirection = agent.destination - _transform.position;
 
         // 获取当前朝向向量
-        Vector3 currentDirection = agent.transform.forward;
+        Vector3 currentDirection = _transform.forward;
 
         // 计算角度差
         float angleDifference = Vector3.Angle(targetDirection, currentDirection);
@@ -157,23 +159,18 @@ public class UnitControl : MonoBehaviour
         Vector3 targetLocation = enemyUnitTarget.transform.position;
         if (InAttackRange(targetLocation))
         {
-            Debug.Log("Stop Movement!");
-            StopMovement();
-
-            //坦克类的在攻击时，在炮塔上的旋转功能
-            //LockOnTarget(targetLocation);
-            StartFireTrigger();
+            Debug.Log("在距离之内");
         }
         else
         {
-            MoveCloser(targetLocation);
+            Debug.Log("在距离之外");
         }
     }
 
     /// <summary>
     /// 立刻急刹车
     /// </summary>
-    protected void StopMovement()
+    public void StopMovement()
     {
         agent.SetDestination(transform.position);
     }
@@ -195,26 +192,11 @@ public class UnitControl : MonoBehaviour
         }
     }
 
-    //protected bool LockOnTarget(Vector3 targetLocation) {
-
-
-    //}
-
     /// <summary>
-    /// 当前单位进入攻击状态
-    /// </summary>
-    /// <param name="enemy">攻击的指定敌人</param>
-    protected void StartFireTrigger() {
-        enemyLocated = true;
-        attackEnemy = true;
-        
-    }
-
-    /// <summary>
-    /// 对地方单位造成伤害。
+    /// 对敌方单位造成伤害。
     /// </summary>
     protected void Attack() {
-        enemyUnitTarget.UnderAttack(attackDamage);
+        Debug.Log("Attack Target.");
     }
 
     IEnumerator AttackCDCounter() {
@@ -225,28 +207,7 @@ public class UnitControl : MonoBehaviour
     //移动到攻击范围内最近点
     protected void MoveCloser(Vector3 targetLocation)
     {
-        // 获取目标点的最近可行走点
-        Vector3 nearestAttackPosition = GetNearestAttackPosition(targetLocation);
-
-        // 移动到最近的可行走点
-        agent.SetDestination(nearestAttackPosition);
-    }
-
-    /// <summary>
-    /// 寻找到前往目标地点周围，适合开火的地点
-    /// </summary>
-    /// <param name="targetPosition"></param>
-    /// <returns></returns>
-    protected Vector3 GetNearestAttackPosition(Vector3 targetPosition)
-    {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(targetPosition, out hit, attackRange, NavMesh.AllAreas))
-        {
-            return hit.position;
-        }
-
-        // 如果没有找到可行走点，则返回目标位置
-        return targetPosition;
+        Debug.Log("Move Closer");
     }
 
 
@@ -276,15 +237,7 @@ public class UnitControl : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        if (attackEnemy)
-        {
-            if (readyToAttack)
-            {
-                readyToAttack = false;
-                StartCoroutine("AttackCDCounter");
-                Attack();
-            }
-        }
+
     }
 
     protected virtual void FixedUpdate()
@@ -297,8 +250,8 @@ public class UnitControl : MonoBehaviour
         {
             RotateToTarget(agent.destination);
         }
-        bool isFacingTarget = IfTowardTarget();
-        if (isFacingTarget && isAutoRotating)
+
+        if (IfTowardTarget(agent.transform) && isAutoRotating)
         {
             isAutoRotating = false;
             agent.speed = normalSpeed;

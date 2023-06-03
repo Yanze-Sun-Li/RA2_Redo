@@ -53,7 +53,7 @@ public class PlayerControl : MonoBehaviour
             //如果玩家已选择单位，不再检测框选。
             if (playerSelectedUnits.Count > 0)
             {
-                Debug.Log("Already selected, no box select action performing.");
+                //Debug.Log("Already selected, no box select action performing.");
                 time_record = Time.time;
                 RecordingClickPosition_OnScreen();
                 ReturnHitGroundPosition();
@@ -65,6 +65,7 @@ public class PlayerControl : MonoBehaviour
                         //敌方单位
                         foreach (UnitControl unitControl in playerSelectedUnits)
                         {
+                            unitControl.StopMovement();
                             unitControl.SetEnemy(unit);
                             unitControl.AttackLogic();
                         }
@@ -88,7 +89,7 @@ public class PlayerControl : MonoBehaviour
             //如果玩家未选择单位，主动检测框选。
             else
             {
-                Debug.Log("nothing selected, box select action performing.");
+                //Debug.Log("nothing selected, box select action performing.");
                 RecordingClickPosition_OnScreen();
                 isRecordingMousePosition = true;
             }

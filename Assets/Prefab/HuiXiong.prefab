@@ -84,15 +84,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   playerID: 0
-  name: 
-  tag: 
+  unit_name: 
+  unit_tag: 
   normalSpeed: 0
   enableRotateBeforeMove: 1
   rotationThreshold: 10
+  attackRange: 10
+  attackDamage: 5
+  attackEnemy: 0
+  enemyUnitTarget: {fileID: 0}
+  attackCD: 0.3
   componentListOnTower:
   - {fileID: 3456754999482436627}
   - {fileID: 543202168338718871}
   - {fileID: 6399930978646833389}
+  turnIdicator: {fileID: 6482209312062636611}
   towerTurnValue: 1.4
 --- !u!1001 &7119649465133378827
 PrefabInstance:
@@ -178,6 +184,12 @@ Transform:
 --- !u!4 &6399930978646833389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5035292498481637914, guid: a845b28753ee22a46aa94d4ced36fecd,
+    type: 3}
+  m_PrefabInstance: {fileID: 7119649465133378827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6482209312062636611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4268141900456406856, guid: a845b28753ee22a46aa94d4ced36fecd,
     type: 3}
   m_PrefabInstance: {fileID: 7119649465133378827}
   m_PrefabAsset: {fileID: 0}

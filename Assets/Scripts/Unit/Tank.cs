@@ -10,7 +10,7 @@ namespace Assets.Scripts.Unit
     class Tank : UnitControl
     {
         //在坦克主体上的炮塔
-        public Transform[] componentListOnTower;
+        public List<Transform> componentListOnTower;
         public float towerTurnValue = 1.4f;
 
         //——————————————————————————————————————————————————————————————————————炮塔的正确旋转——————————————————————————————————————————————————————————————————
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Unit
         /// 请注意，记得要将需要旋转的物体，托选进入上方的componentListOnTower中。
         /// </summary>
         protected void TurnTower(Vector3 target) {
-            if (componentListOnTower.Length <= 0)
+            if (componentListOnTower.Count <= 0)
             {
                 return;
             }
@@ -39,7 +39,7 @@ namespace Assets.Scripts.Unit
             //}     
 
             // 获取目标方向向量
-            targetDirection = target - agent.transform.position;
+            targetDirection = target - componentListOnTower[0].position;
             // 计算目标旋转角度
             targetRotation = Quaternion.LookRotation(targetDirection);
 
@@ -64,6 +64,10 @@ namespace Assets.Scripts.Unit
 
         }
 
+        public override void MoveToWardTargetTrigger(Vector3 _targetPosition) {
+            base.MoveToWardTargetTrigger(_targetPosition);
+        }
+
         /// <summary>
         ///  向着目标方向进行攻击的主逻辑
         /// </summary>
@@ -74,46 +78,69 @@ namespace Assets.Scripts.Unit
             Vector3 _targetLocation = enemyUnitTarget.transform.position;
             if (InAttackRange(_targetLocation))
             {
-                Debug.Log("Stop Movement!");
-                StopMovement();
                 Debug.Log("目标在攻击距离之内，进行攻击！");
                 //坦克类的在攻击时，在炮塔上的旋转功能
-                LockOnTarget();
-                StartFireTrigger();
+                LockOnTargetTrigger();
             }
             else
             {
                 Debug.Log("目标在攻击距离之外，移动到目标区域内进行攻击！");
-                MoveCloser(_targetLocation);
+                LockOnTargetTrigger();
             }
         }
 
-        private void LockOnTarget()
+        private void LockOnTargetTrigger()
         {
-            Debug.Log("向目标旋转炮管。");
+            //Debug.Log("向目标旋转炮管。");
             lockOnTarget = true;
         }
 
-        protected void Update()
-        {
-            base.Update();
+        private void DetectTargetNear() {
+            if (enemyUnitTarget != null)
+            {
+                if (Vector3.Distance(enemyUnitTarget.getPosition(), agent.transform.position) > attackRange)
+                {
+                    Debug.Log("移动目标超出距离的攻击距离，停止炮管锁定");
+                    lockOnTarget = false;
+                }
+                else
+                {
+                    Debug.Log(Vector3.Distance(enemyUnitTarget.getPosition(), componentListOnTower[0].position));
+                    Debug.Log("移动目标未超出距离的攻击距离，持续炮管锁定");
+                    lockOnTarget = true;
+                }
+            }
+        }
 
+        protected override void RotateToTarget(Vector3 targetPosition)
+        {
+            if (!lockOnTarget) {
+                TurnTower(targetPosition);
+            }
+
+            base.RotateToTarget(targetPosition);
         }
 
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (isAutoRotating && !lockOnTarget)
-            {
-                //自动寻路时，转向朝向前进的目标位置。
-                TurnTower(agent.destination);
-            }
 
-            if (isAutoRotating && lockOnTarget)
+            DetectTargetNear();
+
+            if (lockOnTarget)
             {
-                //自动寻路时，转向朝向前进的目标位置。
-                TurnTower(agent.destination);
+                //锁定目标时，向着目标转动炮台。
+                TurnTower(enemyUnitTarget.transform.position);
+            }
+            else {
+                if (!IfTowardTarget(componentListOnTower[0]))
+                {
+                    TurnTower(agent.destination);
+                }
+
+                
             }
         }
+
     }
 }
