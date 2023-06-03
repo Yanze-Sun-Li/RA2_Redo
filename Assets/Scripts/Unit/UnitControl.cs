@@ -331,7 +331,6 @@ public class UnitControl : MonoBehaviour
         {
             if (InAttackRange(enemyUnitTargetPosition))
             {
-                Debug.Log("Í£Ö¹£¡");
                 agent.SetDestination(agent.transform.position);
                 StopMovement();
                 autoChase = false;
