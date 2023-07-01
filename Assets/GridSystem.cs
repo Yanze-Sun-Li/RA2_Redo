@@ -10,7 +10,7 @@ public class Grid
     public float y2;
     public float width;
     public float height;
-    public Object[] objects;
+    public List<GameObject> objects;
 
     public Grid(float x1, float y1, float x2, float y2, float width, float height)
     {
@@ -20,7 +20,7 @@ public class Grid
         this.y2 = y2;
         this.width = width;
         this.height = height;
-        objects = new Object[0];
+        objects = new List<GameObject>();
     }
 
     public float calculateArea()
