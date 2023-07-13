@@ -11,8 +11,10 @@ public class Grid
     public float width;
     public float height;
     public List<GameObject> objects;
+    public int index_x;
+    public int index_y;
 
-    public Grid(float x1, float y1, float x2, float y2, float width, float height)
+    public Grid(float x1, float y1, float x2, float y2, float width, float height, int index_x, int index_y)
     {
         this.x1 = x1;
         this.y1 = y1;
@@ -20,17 +22,35 @@ public class Grid
         this.y2 = y2;
         this.width = width;
         this.height = height;
+        this.index_x = index_x;
+        this.index_y = index_y;
         objects = new List<GameObject>();
     }
+
+    /// <summary>
+    /// åˆ¤æ–­ä¸€ä¸ªæ¸¸æˆç‰©ä½“æ˜¯å¦åœ¨ç½‘æ ¼ä¸­
+    /// </summary>
+    /// <param name="gameObject">è¦æ£€æŸ¥çš„æ¸¸æˆç‰©ä½“</param>
+    /// <returns>å¦‚æœæ¸¸æˆç‰©ä½“åœ¨ç½‘æ ¼ä¸­ï¼Œè¿”å›trueï¼›å¦åˆ™è¿”å›false</returns>
     public bool IsPositionInGrid(GameObject gameObject)
     {
         Vector3 position = gameObject.transform.position;
         return position.x >= x1 && position.x <= x2 && position.z >= y1 && position.z <= y2;
     }
-    public float calculateArea()
+
+    /// <summary>
+    /// è®¡ç®—ç½‘æ ¼çš„é¢ç§¯ï¼ˆå®½åº¦ä¹˜ä»¥é«˜åº¦ï¼‰
+    /// </summary>
+    /// <returns>ç½‘æ ¼çš„é¢ç§¯</returns>
+    public float CalculateArea()
     {
         return width * height;
     }
+
+    /// <summary>
+    /// æ·»åŠ æ¸¸æˆç‰©ä½“åˆ°ç½‘æ ¼ä¸­
+    /// </summary>
+    /// <param name="obj">è¦æ·»åŠ çš„æ¸¸æˆç‰©ä½“</param>
     public void AddObject(GameObject obj)
     {
         if (!objects.Contains(obj))
@@ -38,6 +58,11 @@ public class Grid
             objects.Add(obj);
         }
     }
+
+    /// <summary>
+    /// ä»ç½‘æ ¼ä¸­ç§»é™¤æ¸¸æˆç‰©ä½“
+    /// </summary>
+    /// <param name="obj">è¦ç§»é™¤çš„æ¸¸æˆç‰©ä½“</param>
     public void RemoveObject(GameObject obj)
     {
         if (objects.Contains(obj))
@@ -46,12 +71,16 @@ public class Grid
         }
     }
 
+    /// <summary>
+    /// å°†æ¸¸æˆç‰©ä½“ä»å½“å‰ç½‘æ ¼ç§»åŠ¨åˆ°ç›®æ ‡ç½‘æ ¼
+    /// </summary>
+    /// <param name="obj">è¦ç§»åŠ¨çš„æ¸¸æˆç‰©ä½“</param>
+    /// <param name="targetGrid">ç›®æ ‡ç½‘æ ¼</param>
     public void MoveObjectToGrid(GameObject obj, Grid targetGrid)
     {
         RemoveObject(obj);
         targetGrid.AddObject(obj);
     }
-
 }
 
 
@@ -75,37 +104,39 @@ public class GridSystem : MonoBehaviour
 
     }
 
-    // ¼ÆËãÍø¸ñÏµÍ³
+    /// <summary>
+    /// è®¡ç®—ç½‘æ ¼ç³»ç»Ÿï¼Œæ ¹æ®æŒ‡å®šèŒƒå›´ç”Ÿæˆç½‘æ ¼
+    /// </summary>
     void CalculateGrids()
     {
         Renderer[] childRenderers = terrainParent.GetComponentsInChildren<Renderer>();
 
-        // »ñÈ¡×ÓÎïÌåµÄ±ß½ç
+        // è·å–å­ç‰©ä½“çš„è¾¹ç•Œ
         Bounds combinedBounds = new Bounds();
         foreach (Renderer renderer in childRenderers)
         {
             combinedBounds.Encapsulate(renderer.bounds);
         }
 
-        // ¼ÆËãµØĞÎ¸¸ÎïÌåµÄ±ß½çÖĞĞÄµã
+        // è®¡ç®—åœ°å½¢çˆ¶ç‰©ä½“çš„è¾¹ç•Œä¸­å¿ƒç‚¹
         Vector3 terrainCenter = combinedBounds.center;
 
-        // ¼ÆËãµØĞÎ¸¸ÎïÌåµÄ±ß½ç¿í¶ÈºÍ¸ß¶È
+        // è®¡ç®—åœ°å½¢çˆ¶ç‰©ä½“çš„è¾¹ç•Œå®½åº¦å’Œé«˜åº¦
         float terrainWidth = combinedBounds.size.x;
         float terrainHeight = combinedBounds.size.z;
 
-        // ¼ÆËãÃ¿¸öÍø¸ñÏµÍ³µÄĞĞÊıºÍÁĞÊı
+        // è®¡ç®—æ¯ä¸ªç½‘æ ¼ç³»ç»Ÿçš„è¡Œæ•°å’Œåˆ—æ•°
         int rowCount = Mathf.CeilToInt(terrainHeight / gridHeight);
         int colCount = Mathf.CeilToInt(terrainWidth / gridWidth);
 
-        // µ÷ÕûÍø¸ñµÄ¿í¶ÈºÍ¸ß¶È
+        // è°ƒæ•´ç½‘æ ¼çš„å®½åº¦å’Œé«˜åº¦
         gridWidth = terrainWidth / colCount;
         gridHeight = terrainHeight / rowCount;
 
-        // ³õÊ¼»¯Íø¸ñÊı×é
+        // åˆå§‹åŒ–ç½‘æ ¼æ•°ç»„
         grids = new Grid[rowCount, colCount];
 
-        // ¼ÆËãÃ¿¸öÍø¸ñµÄ±ß½çºÍÖĞĞÄµã£¬²¢´´½¨Íø¸ñ¶ÔÏó
+        // è®¡ç®—æ¯ä¸ªç½‘æ ¼çš„è¾¹ç•Œå’Œä¸­å¿ƒç‚¹ï¼Œå¹¶åˆ›å»ºç½‘æ ¼å¯¹è±¡
         for (int row = 0; row < rowCount; row++)
         {
             for (int col = 0; col < colCount; col++)
@@ -115,18 +146,23 @@ public class GridSystem : MonoBehaviour
                 float x2 = x1 + gridWidth;
                 float y2 = y1 + gridHeight;
 
-                grids[row, col] = new Grid(x1, y1, x2, y2, gridWidth, gridHeight);
+                grids[row, col] = new Grid(x1, y1, x2, y2, gridWidth, gridHeight, row, col);
+
             }
         }
     }
 
+    /// <summary>
+    /// å°†æ¸¸æˆç‰©ä½“æ·»åŠ åˆ°ç½‘æ ¼ç³»ç»Ÿä¸­çš„ç›¸åº”ç½‘æ ¼
+    /// </summary>
+    /// <param name="obj">è¦æ·»åŠ çš„æ¸¸æˆç‰©ä½“</param>
     public void AddObjectToGrid(GameObject obj)
     {
         foreach (Grid grid in grids)
         {
             if (grid.IsPositionInGrid(obj))
             {
-                // ¼ì²éÎïÌåÊÇ·ñÒÑ¾­´æÔÚÓÚÄ³¸öÍø¸ñÖĞ
+                // æ£€æŸ¥ç‰©ä½“æ˜¯å¦å·²ç»å­˜åœ¨äºæŸä¸ªç½‘æ ¼ä¸­
                 if (!grid.objects.Contains(obj))
                 {
                     grid.MoveObjectToGrid(obj, grid);
@@ -136,22 +172,26 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-    // »ñÈ¡Ö¸¶¨Íø¸ñÖÜ±ßÍø¸ñÄÚµÄÎïÌå
+    /// <summary>
+    /// è·å–æŒ‡å®šç½‘æ ¼å‘¨å›´çš„ç›¸é‚»æ¸¸æˆç‰©ä½“
+    /// </summary>
+    /// <param name="grid">æŒ‡å®šçš„ç½‘æ ¼</param>
+    /// <param name="range">æœç´¢èŒƒå›´</param>
+    /// <returns>ç›¸é‚»æ¸¸æˆç‰©ä½“çš„åˆ—è¡¨</returns>
     public List<GameObject> GetNeighboringObjects(Grid grid, int range)
     {
         List<GameObject> neighboringObjects = new List<GameObject>();
 
-        // »ñÈ¡Íø¸ñµÄĞĞË÷ÒıºÍÁĞË÷Òı
-        int rowIndex = Mathf.RoundToInt((grid.y1 - grids[0, 0].y1) / gridHeight);
-        int colIndex = Mathf.RoundToInt((grid.x1 - grids[0, 0].x1) / gridWidth);
+        int rowIndex = grid.index_x;
+        int colIndex = grid.index_y;
 
-        // ¼ÆËãÖÜ±ßÍø¸ñµÄĞĞ·¶Î§ºÍÁĞ·¶Î§
+        // è®¡ç®—å‘¨å›´ç½‘æ ¼çš„è¡ŒèŒƒå›´å’Œåˆ—èŒƒå›´ï¼Œç¡®ä¿ä¸è¶…å‡ºç´¢å¼•èŒƒå›´
         int startRow = Mathf.Max(0, rowIndex - range);
         int endRow = Mathf.Min(grids.GetLength(0) - 1, rowIndex + range);
         int startCol = Mathf.Max(0, colIndex - range);
         int endCol = Mathf.Min(grids.GetLength(1) - 1, colIndex + range);
 
-        // ±éÀúÖÜ±ßÍø¸ñ²¢ÊÕ¼¯ÎïÌå
+        // éå†å‘¨å›´ç½‘æ ¼å¹¶æ”¶é›†ç‰©ä½“
         for (int row = startRow; row <= endRow; row++)
         {
             for (int col = startCol; col <= endCol; col++)
@@ -164,28 +204,35 @@ public class GridSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ²éÕÒÔÚÒ»¶¨µÄ·¶Î§Ö®ÄÚ´æÔÚµÄÆäËûÍø¸ñÎïÌå¡££¨ÓÃĞĞºÍÁĞµÄÎ»ÖÃĞÅÏ¢À´¶¨Î»Ò»¸öÍø¸ñ£¬£©
+    /// åœ¨æŒ‡å®šè¡Œå’Œåˆ—çš„ç½‘æ ¼å‘¨å›´æŸ¥æ‰¾å­˜åœ¨çš„å…¶ä»–ç½‘æ ¼ç‰©ä½“
     /// </summary>
-    /// <param name="rowIndex">ĞĞ×ø±ê</param>
-    /// <param name="colIndex">ÁĞ×ø±ê</param>
-    /// <param name="competObject">Ö¸¶¨½øĞĞÎ»ÖÃĞÅÏ¢¶Ô±ÈµÄÎïÌå</param>
-    /// <param name="range">ËÑË÷È¦µÄ·¶Î§</param>
-    public void Surrounding(int rowIndex, int colIndex, GameObject competObject, int range) {
+    /// <param name="rowIndex">è¡Œåæ ‡</param>
+    /// <param name="colIndex">åˆ—åæ ‡</param>
+    /// <param name="competObject">ç”¨äºä½ç½®æ¯”è¾ƒçš„æ¸¸æˆç‰©ä½“</param>
+    /// <param name="gridRange">ç½‘æ ¼çš„æœç´¢èŒƒå›´</param>
+    /// <param name="objectDistance">å¤šè¿œçš„è·ç¦»æ‰ä¼šè¢«åˆ¤å®šä¸ºâ€œæ¥è¿‘â€?</param>
+    /// <returns>æ‰€æœ‰è¶³å¤Ÿæ¥è¿‘ç›®æ ‡çš„ç‰©ä½“</returns>
+    public List<GameObject> GetCloseNeighboringObjects(int rowIndex, int colIndex, GameObject competObject, int gridRange, float objectDistance)
+    {
         Grid grid = grids[rowIndex, colIndex];
-         // ÉèÖÃ·¶Î§´óĞ¡
-        List<GameObject> neighboringObjects = GetNeighboringObjects(grid, range);
+        List<GameObject> neighboringObjects = GetNeighboringObjects(grid, gridRange);
+
+        List<GameObject> closeObjects = new List<GameObject>();
 
         foreach (GameObject neighboringObject in neighboringObjects)
         {
-            // ¼ÆËãÍø¸ñÄÚÎïÌåÓëÖÜ±ßÍø¸ñÄÚÎïÌåÖ®¼äµÄ¾àÀë
             float distance = Vector3.Distance(neighboringObject.transform.position, competObject.transform.position);
-            // ÔÚÕâÀï½øĞĞ´¦ÀíÂß¼­
 
-
+            if (distance < objectDistance)
+            {
+                closeObjects.Add(neighboringObject);
+            }
         }
+
+        return closeObjects;
     }
 
-    // ÔÚSceneÊÓÍ¼ÖĞ»æÖÆÍø¸ñÏµÍ³µÄ±ß½ç
+    // åœ¨Sceneè§†å›¾ä¸­ç»˜åˆ¶ç½‘æ ¼ç³»ç»Ÿçš„è¾¹ç•Œ
     private void OnDrawGizmos()
     {
         if (grids != null)

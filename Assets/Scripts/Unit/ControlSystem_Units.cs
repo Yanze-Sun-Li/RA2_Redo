@@ -30,7 +30,7 @@ public class ControlSystem_Units : MonoBehaviour
             {
                 if (player.playerID == -1)
                 {
-                    Debug.LogError("One of the Player do not have an proper ID. 有一位玩家的用户ID没有初始化。");
+                    Debug.LogError("One of the Player do not have an proper ID. 脫脨脪禄脦禄脥忙录脪碌脛脫脙禄搂ID脙禄脫脨鲁玫脢录禄炉隆拢");
                 }
                 if (unit.playerID == player.playerID)
                 {

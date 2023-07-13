@@ -8,10 +8,10 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(NavMeshAgent))]
 public class UnitControl : MonoBehaviour
 {
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªĞÅÏ¢Àà¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”ä¿¡æ¯ç±»â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     protected NavMeshAgent agent;
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÊôĞÔÀà¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”å±æ€§ç±»â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     public int id;
     public int playerID;
     public string unit_name;
@@ -19,36 +19,36 @@ public class UnitControl : MonoBehaviour
     public float normalSpeed;
     
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÓÃÓÚÏòÆäËûµÄComponentÌá¹©ĞÅÏ¢µÄ¹¦ÄÜ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”ç”¨äºå‘å…¶ä»–çš„Componentæä¾›ä¿¡æ¯çš„åŠŸèƒ½â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     /// <summary>
-    /// ¸øÓè·ÃÎÊÕßµ±Ç°µ¥Î»µÄÎ»ÖÃÔÚÊ²Ã´µØ·½¡£
+    /// ç»™äºˆè®¿é—®è€…å½“å‰å•ä½çš„ä½ç½®åœ¨ä»€ä¹ˆåœ°æ–¹ã€‚
     /// </summary>
-    /// <returns>ÒÔVector3·µ»ØµÄxyzÎ»ÖÃĞÅÏ¢¡£</returns>
+    /// <returns>ä»¥Vector3è¿”å›çš„xyzä½ç½®ä¿¡æ¯ã€‚</returns>
     public Vector3 getPosition() {
         return gameObject.transform.position;
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¹¦ÄÜ²¿·Ö£¬µ¥Î»ÄÜ¹»½øĞĞµÄĞĞÎª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-    //Ä¿±êÎ»ÖÃ¼ÇÂ¼£º
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”åŠŸèƒ½éƒ¨åˆ†ï¼Œå•ä½èƒ½å¤Ÿè¿›è¡Œçš„è¡Œä¸ºâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+    //ç›®æ ‡ä½ç½®è®°å½•ï¼š
     Vector3 targetPosition;
 
     /// <summary>
-    /// ¶ÔÏò×ÅÄ¿±ê·½ÏòÇ°½øµÄ·½Ê½½øĞĞÅĞ¶Ï
+    /// å¯¹å‘ç€ç›®æ ‡æ–¹å‘å‰è¿›çš„æ–¹å¼è¿›è¡Œåˆ¤æ–­
     /// </summary>
-    /// <param name="targetPosition">Ä¿±êÎ»ÖÃ</param>
+    /// <param name="targetPosition">ç›®æ ‡ä½ç½®</param>
     public virtual void MoveToWardTargetTrigger(Vector3 _targetPosition) {
         Debug.Log("Moving toward target position: " + _targetPosition);
         forceGoToDestination = true;
         targetPosition = _targetPosition;
         attackSelectedTarget = false;
         agent.SetDestination(targetPosition);
-        //Èç¹ûÃ»ÓĞ¿ªÆô±ØĞëĞı×ªºóÒÆ¶¯£º
+        //å¦‚æœæ²¡æœ‰å¼€å¯å¿…é¡»æ—‹è½¬åç§»åŠ¨ï¼š
         if (!enableRotateBeforeMove)
         {
             //Debug.Log("trying to moving!" + " Target: " + targetPosition);
            
         }else
-        //Èç¹û¿ªÆôÁË±ØĞëĞı×ªºóÒÆ¶¯£¬´¥·¢´¥·¢Æ÷¡£
+        //å¦‚æœå¼€å¯äº†å¿…é¡»æ—‹è½¬åç§»åŠ¨ï¼Œè§¦å‘è§¦å‘å™¨ã€‚
         {
             //Debug.Log("trying to rotate before moving!" + " Target: " + targetPosition);
             isAutoRotating = true;
@@ -57,62 +57,62 @@ public class UnitControl : MonoBehaviour
 
     }
 
-    //_____________________Ğı×ª¹¦ÄÜ²¿·Ö£¬µ±¿ªÆôÊ±£¬µ¥Î»±ØĞëÏÈĞı×ª£¬È»ºóÔÙÒÆ¶¯¡££¨´óĞÍµ¥Î»Ğı×ª·½·¨£©¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //_____________________æ—‹è½¬åŠŸèƒ½éƒ¨åˆ†ï¼Œå½“å¼€å¯æ—¶ï¼Œå•ä½å¿…é¡»å…ˆæ—‹è½¬ï¼Œç„¶åå†ç§»åŠ¨ã€‚ï¼ˆå¤§å‹å•ä½æ—‹è½¬æ–¹æ³•ï¼‰â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     public bool enableRotateBeforeMove = false;
-    protected bool isAutoRotating = false; // ÊÇ·ñÕıÔÚ×Ô¶¯Ğı×ªÖÁÄ¿±ê·½Î»
+    protected bool isAutoRotating = false; // æ˜¯å¦æ­£åœ¨è‡ªåŠ¨æ—‹è½¬è‡³ç›®æ ‡æ–¹ä½
     [SerializeField]
-    protected float rotationThreshold = 10f; // Ğı×ªãĞÖµ£¬Ğ¡ÓÚ¸ÃÖµÈÏÎªĞı×ªÍê³É
-    //Çë×¢Òâ£¬ÒÔÏÂÁ½¸öReferenceÔÚRotateTargetÖ®ÖĞ¸üĞÂ£¬Èç¹ûÃ»ÓĞÖ´ĞĞRotateTarget·½·¨¸üĞÂ¾ÍÌáÈ¡£¬½«»áµÃµ½´íÎóµÄÄÚÈİ¡£
+    protected float rotationThreshold = 10f; // æ—‹è½¬é˜ˆå€¼ï¼Œå°äºè¯¥å€¼è®¤ä¸ºæ—‹è½¬å®Œæˆ
+    //è¯·æ³¨æ„ï¼Œä»¥ä¸‹ä¸¤ä¸ªReferenceåœ¨RotateTargetä¹‹ä¸­æ›´æ–°ï¼Œå¦‚æœæ²¡æœ‰æ‰§è¡ŒRotateTargetæ–¹æ³•æ›´æ–°å°±æå–ï¼Œå°†ä¼šå¾—åˆ°é”™è¯¯çš„å†…å®¹ã€‚
     protected Vector3 targetDirection;
     protected Quaternion targetRotation;
 
     /// <summary>
     /// In each frame, rotate unit toward target
-    /// ÔÚÃ¿Ö¡ÖĞ£¬¶¼»á½«µ¥Î»Ïò×ÅÄ¿±êÎ»ÖÃĞı×ªÒ»µã¡£
+    /// åœ¨æ¯å¸§ä¸­ï¼Œéƒ½ä¼šå°†å•ä½å‘ç€ç›®æ ‡ä½ç½®æ—‹è½¬ä¸€ç‚¹ã€‚
     /// </summary>
-    /// <param name="targetPosition">Ğı×ªÏòµÄÄ¿±êÎ»ÖÃ</param>
+    /// <param name="targetPosition">æ—‹è½¬å‘çš„ç›®æ ‡ä½ç½®</param>
     protected virtual void RotateToTarget(Vector3 targetPosition) {
 
-        // »ñÈ¡Ä¿±ê·½ÏòÏòÁ¿
+        // è·å–ç›®æ ‡æ–¹å‘å‘é‡
         targetDirection = targetPosition - agent.transform.position;
 
-        // ¼ÆËãÄ¿±êĞı×ª½Ç¶È
+        // è®¡ç®—ç›®æ ‡æ—‹è½¬è§’åº¦
         targetRotation = Quaternion.LookRotation(targetDirection);
 
-        // ´´½¨ÏŞÖÆºóµÄÅ·À­½Ç
+        // åˆ›å»ºé™åˆ¶åçš„æ¬§æ‹‰è§’
         Vector3 limitedRotation = new Vector3(0, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
 
-        // ½«ÏŞÖÆºóµÄÅ·À­½Ç×ª»»ÎªĞı×ª½Ç¶È
+        // å°†é™åˆ¶åçš„æ¬§æ‹‰è§’è½¬æ¢ä¸ºæ—‹è½¬è§’åº¦
         Quaternion limitedQuaternion = Quaternion.Euler(limitedRotation);
 
-        // Ê¹ÓÃ²åÖµ·½·¨Öğ½¥½«ÎïÌåĞı×ªµ½Ä¿±ê·½Ïò
+        // ä½¿ç”¨æ’å€¼æ–¹æ³•é€æ¸å°†ç‰©ä½“æ—‹è½¬åˆ°ç›®æ ‡æ–¹å‘
         agent.transform.rotation = Quaternion.RotateTowards(transform.rotation, limitedQuaternion, agent.angularSpeed * Time.deltaTime);
 
     }
 
     /// <summary>
-    /// µ±Ç°µÄAgentÎïÌåÊÇ·ñÕıÃæÏòÄ¿±êÎ»ÖÃ£¿
+    /// å½“å‰çš„Agentç‰©ä½“æ˜¯å¦æ­£é¢å‘ç›®æ ‡ä½ç½®ï¼Ÿ
     /// </summary>
-    /// <param name="transform">Ä¿±êÎ»ÖÃ</param>
+    /// <param name="transform">ç›®æ ‡ä½ç½®</param>
     /// <returns></returns>
     protected bool IfTowardTarget(Transform _transform) {
-        // »ñÈ¡Ä¿±ê·½ÏòÏòÁ¿
+        // è·å–ç›®æ ‡æ–¹å‘å‘é‡
         targetDirection = agent.destination - _transform.position;
 
-        // »ñÈ¡µ±Ç°³¯ÏòÏòÁ¿
+        // è·å–å½“å‰æœå‘å‘é‡
         Vector3 currentDirection = _transform.forward;
 
-        // ¼ÆËã½Ç¶È²î
+        // è®¡ç®—è§’åº¦å·®
         float angleDifference = Vector3.Angle(targetDirection, currentDirection);
 
-        // ÅĞ¶Ï½Ç¶È²îÊÇ·ñĞ¡ÓÚãĞÖµ
+        // åˆ¤æ–­è§’åº¦å·®æ˜¯å¦å°äºé˜ˆå€¼
         return angleDifference < rotationThreshold;
     }
 
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª³õÊ¼»¯£¬Ä¬ÈÏÉèÖÃË¢ĞÂµÈÏà¹Ø¹¦ÄÜ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”åˆå§‹åŒ–ï¼Œé»˜è®¤è®¾ç½®åˆ·æ–°ç­‰ç›¸å…³åŠŸèƒ½â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
     /// <summary>
-    /// ½«µ¥Î»ĞÅÏ¢Ë¢ĞÂÎª³õÊ¼×´Ì¬¡£
+    /// å°†å•ä½ä¿¡æ¯åˆ·æ–°ä¸ºåˆå§‹çŠ¶æ€ã€‚
     /// </summary>
     public void InfoInitial() 
     {
@@ -123,9 +123,9 @@ public class UnitControl : MonoBehaviour
 
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¹¥»÷ĞĞÎª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-    //Attack Variables ¹¥»÷Ïà¹Ø±äÁ¿
-    //¹¥»÷¾àÀë
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”æ”»å‡»è¡Œä¸ºâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
+    //Attack Variables æ”»å‡»ç›¸å…³å˜é‡
+    //æ”»å‡»è·ç¦»
     [SerializeField]
     protected float attackRange = 10f;
     [SerializeField]
@@ -133,44 +133,44 @@ public class UnitControl : MonoBehaviour
     [SerializeField]
     protected bool attackEnemy = false;
     //Enemy Located
-    //·¢ÏÖµĞ¾ü
+    //å‘ç°æ•Œå†›
     protected bool enemyLocated = false;
-    //ÊÇ·ñ¿ªÊ¼¹¥»÷£¿
+    //æ˜¯å¦å¼€å§‹æ”»å‡»ï¼Ÿ
     protected bool attackSelectedTarget = false;
-    //Ä¿Ç°½öÖ§³Ö¶ÔµĞ·½ÒÆ¶¯µ¥Î»Ôì³É¹¥»÷¡£
+    //ç›®å‰ä»…æ”¯æŒå¯¹æ•Œæ–¹ç§»åŠ¨å•ä½é€ æˆæ”»å‡»ã€‚
     public UnitControl enemyUnitTarget;
     protected Vector3 enemyUnitTargetPosition;
 
     public UnitControl autoResponseTarget;
-    //--´ıÍêÉÆ£¬ µ±Ç°Ê±¼äÄÚÎŞ¶ÔµØ·½½¨Öşµ¥Î»½øĞĞ¹¥»÷µÄreference¡£
+    //--å¾…å®Œå–„ï¼Œ å½“å‰æ—¶é—´å†…æ— å¯¹åœ°æ–¹å»ºç­‘å•ä½è¿›è¡Œæ”»å‡»çš„referenceã€‚
 
-    //¹¥»÷ÀäÈ´Ê±¼ä
+    //æ”»å‡»å†·å´æ—¶é—´
     [SerializeField]
     protected float attackCD = 1.3f;
     protected bool readyToAttack = true;
 
-    //ÊÇ·ñÇ¿ÖÆÒÆ¶¯µ½Ä¿±êÇøÓò
+    //æ˜¯å¦å¼ºåˆ¶ç§»åŠ¨åˆ°ç›®æ ‡åŒºåŸŸ
     protected bool forceGoToDestination = false;
-    //ÊÇ·ñ×Ô¶¯×·Öğ
+    //æ˜¯å¦è‡ªåŠ¨è¿½é€
     protected bool autoChase = false;
 
     /// <summary>
-    /// ÉèÖÃÒ»¸ö¹¥»÷µÄÄ¿±ê¡£
+    /// è®¾ç½®ä¸€ä¸ªæ”»å‡»çš„ç›®æ ‡ã€‚
     /// </summary>
-    /// <param name="enemy">¼´½«½øĞĞ¹¥»÷µÄÄ¿±ê</param>
+    /// <param name="enemy">å³å°†è¿›è¡Œæ”»å‡»çš„ç›®æ ‡</param>
     public void SetEnemy(UnitControl enemy) {
         enemyUnitTarget = enemy;
     }
 
     /// <summary>
-    ///  Ïò×ÅÄ¿±ê·½Ïò½øĞĞ¹¥»÷µÄÖ÷Âß¼­¡£
-    ///  ÔÚÊ¹ÓÃ¸Ã·½·¨Ö®Ç°£¬ÇëÏÈÊ¹ÓÃSetEnemy()»òenemyUnitTargetÉèÖÃÄ¿±ê£¡
+    ///  å‘ç€ç›®æ ‡æ–¹å‘è¿›è¡Œæ”»å‡»çš„ä¸»é€»è¾‘ã€‚
+    ///  åœ¨ä½¿ç”¨è¯¥æ–¹æ³•ä¹‹å‰ï¼Œè¯·å…ˆä½¿ç”¨SetEnemy()æˆ–enemyUnitTargetè®¾ç½®ç›®æ ‡ï¼
     /// </summary>
     public virtual void AttackLogicTrigger() {
         attackSelectedTarget = true;
     }
     /// <summary>
-    /// ·ÅÆú¹¥»÷Ö¸¶¨Ä¿±ê
+    /// æ”¾å¼ƒæ”»å‡»æŒ‡å®šç›®æ ‡
     /// </summary>
     protected virtual void GiveUpAttack()
     {
@@ -178,8 +178,8 @@ public class UnitControl : MonoBehaviour
     }
 
     /// <summary>
-    ///  ĞèÒª½«Õâ¸ö²¿·Ö·ÅÔÚUpdateÖĞ£¬²Å»á³ÖĞøµÄÅĞ¶ÏÊÇ·ñÓ¦¸Ã½øĞĞ¹¥»÷¡£
-    ///  ÔÚÊ¹ÓÃ¸Ã·½·¨Ö®Ç°£¬ÇëÏÈÊ¹ÓÃSetEnemy()»òenemyUnitTargetÉèÖÃÄ¿±ê£¡
+    ///  éœ€è¦å°†è¿™ä¸ªéƒ¨åˆ†æ”¾åœ¨Updateä¸­ï¼Œæ‰ä¼šæŒç»­çš„åˆ¤æ–­æ˜¯å¦åº”è¯¥è¿›è¡Œæ”»å‡»ã€‚
+    ///  åœ¨ä½¿ç”¨è¯¥æ–¹æ³•ä¹‹å‰ï¼Œè¯·å…ˆä½¿ç”¨SetEnemy()æˆ–enemyUnitTargetè®¾ç½®ç›®æ ‡ï¼
     /// </summary>
     public void AttackLogicUpdate() {
         if (readyToAttack)
@@ -200,7 +200,7 @@ public class UnitControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Á¢¿Ì¼±É²³µ
+    /// ç«‹åˆ»æ€¥åˆ¹è½¦
     /// </summary>
     public void StopMovement()
     {
@@ -209,10 +209,10 @@ public class UnitControl : MonoBehaviour
 
 
     /// <summary>
-    /// Ä¿±êËùÔÚµØÊÇ·ñÔÚµ¥Î»µÄ¹¥»÷·¶Î§Ö®ÄÚ£¿
+    /// ç›®æ ‡æ‰€åœ¨åœ°æ˜¯å¦åœ¨å•ä½çš„æ”»å‡»èŒƒå›´ä¹‹å†…ï¼Ÿ
     /// </summary>
-    /// <param name="targetLocation">Ä¿±êµÄ·½ÏòÊÇ£¿</param>
-    /// <returns>ÊÇ·ñÔÚ¹¥»÷·¶Î§Ö®ÄÚ£¿</returns>
+    /// <param name="targetLocation">ç›®æ ‡çš„æ–¹å‘æ˜¯ï¼Ÿ</param>
+    /// <returns>æ˜¯å¦åœ¨æ”»å‡»èŒƒå›´ä¹‹å†…ï¼Ÿ</returns>
     protected bool InAttackRange(Vector3 targetLocation) {
 
         if (Vector3.Distance(targetLocation,agent.transform.position) < attackRange)
@@ -225,7 +225,7 @@ public class UnitControl : MonoBehaviour
     }
 
     /// <summary>
-    /// ¶ÔµĞ·½µ¥Î»Ôì³ÉÉËº¦¡£
+    /// å¯¹æ•Œæ–¹å•ä½é€ æˆä¼¤å®³ã€‚
     /// </summary>
     protected void Attack(UnitControl target) {
         target.UnderAttack(attackDamage);
@@ -236,35 +236,35 @@ public class UnitControl : MonoBehaviour
         readyToAttack = true;
     }
 
-    //ÒÆ¶¯µ½¹¥»÷·¶Î§ÄÚ×î½üµã
+    //ç§»åŠ¨åˆ°æ”»å‡»èŒƒå›´å†…æœ€è¿‘ç‚¹
     protected void MoveCloser(Vector3 _targetLocation)
     {
         agent.SetDestination(_targetLocation);
         autoChase = true;
     }
 
-    //Í£Ö¹Ç¿ÖÆÇ°ÍùÄ¿±êµØµãµÄTrigger
+    //åœæ­¢å¼ºåˆ¶å‰å¾€ç›®æ ‡åœ°ç‚¹çš„Trigger
     protected void CancelForceGoTo()
     {
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            // NavMesh AgentÒÑ¾­µÖ´ïÄ¿±êÎ»ÖÃ
+            // NavMesh Agentå·²ç»æŠµè¾¾ç›®æ ‡ä½ç½®
             forceGoToDestination = false;
         }
     }
 
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªµ¥Î»ÊÜµ½¹¥»÷¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”å•ä½å—åˆ°æ”»å‡»â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
     /// <summary>
-    /// µ¥Î»±»¹¥»÷ºó...
+    /// å•ä½è¢«æ”»å‡»å...
     /// </summary>
-    /// <param name="attackDamage">±»¹¥»÷µÄÉËº¦ÊıÖµ</param>
+    /// <param name="attackDamage">è¢«æ”»å‡»çš„ä¼¤å®³æ•°å€¼</param>
     protected void UnderAttack(float attackDamage) {
-        Debug.Log("µ¥Î»" + gameObject.name + "ÔâÊÜÁËÒ»´Î" + attackDamage + "µãÉËº¦µÄ¹¥»÷¡£"); 
+        Debug.Log("å•ä½" + gameObject.name + "é­å—äº†ä¸€æ¬¡" + attackDamage + "ç‚¹ä¼¤å®³çš„æ”»å‡»ã€‚"); 
     }
 
-    //¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªUnityÓÎÏ·ÒıÇæÄ¬ÈÏ¹¦ÄÜ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+    //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”Unityæ¸¸æˆå¼•æ“é»˜è®¤åŠŸèƒ½â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 
     protected void Awake()
     {
