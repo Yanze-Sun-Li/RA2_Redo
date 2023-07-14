@@ -17,6 +17,7 @@ public class UnitControl : MonoBehaviour
     public string unit_name;
     public string unit_tag;
     public float normalSpeed;
+    public Vector3 agentDes;
     
 
     //——————————————————————用于向其他的Component提供信息的功能————————————————————————————————————
@@ -42,6 +43,7 @@ public class UnitControl : MonoBehaviour
         targetPosition = _targetPosition;
         attackSelectedTarget = false;
         agent.SetDestination(targetPosition);
+        agentDes = agent.destination;
         //如果没有开启必须旋转后移动：
         if (!enableRotateBeforeMove)
         {
