@@ -99,9 +99,9 @@ public class GridSystem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
+        
     }
 
     /// <summary>
@@ -232,19 +232,27 @@ public class GridSystem : MonoBehaviour
         return closeObjects;
     }
 
-    // 在Scene视图中绘制网格系统的边界
-    private void OnDrawGizmos()
+// 在Scene视图中绘制网格系统的边界
+private void OnDrawGizmos()
+{
+    if (grids != null)
     {
-        if (grids != null)
+        foreach (Grid grid in grids)
         {
-            foreach (Grid grid in grids)
+            if (grid.objects.Count > 0)
+            {
+                Gizmos.color = Color.green;
+            }
+            else
             {
                 Gizmos.color = Color.blue;
-                Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y1), new Vector3(grid.x2, 0, grid.y1));
-                Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y1), new Vector3(grid.x2, 0, grid.y2));
-                Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y2), new Vector3(grid.x1, 0, grid.y2));
-                Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y2), new Vector3(grid.x1, 0, grid.y1));
             }
+
+            Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y1), new Vector3(grid.x2, 0, grid.y1));
+            Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y1), new Vector3(grid.x2, 0, grid.y2));
+            Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y2), new Vector3(grid.x1, 0, grid.y2));
+            Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y2), new Vector3(grid.x1, 0, grid.y1));
         }
     }
+}
 }

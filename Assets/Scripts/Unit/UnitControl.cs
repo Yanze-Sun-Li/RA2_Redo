@@ -260,8 +260,26 @@ public class UnitControl : MonoBehaviour
     /// 单位被攻击后...
     /// </summary>
     /// <param name="attackDamage">被攻击的伤害数值</param>
-    protected void UnderAttack(float attackDamage) {
+    protected void UnderAttack(float attackDamage)
+    {
         Debug.Log("单位" + gameObject.name + "遭受了一次" + attackDamage + "点伤害的攻击。"); 
+    }
+
+    //——————————————————————————————单位初始化——————————————
+    public ControlSystem_Units controlSystem_Units;
+    private bool control;
+
+    /// <summary>
+    /// 当该单位出现时，向单位控制总系统(ControlSystem_Units)注册自己，告知自己已经加入游戏。
+    /// </summary>
+    public void initialization() 
+    {
+        if (controlSystem_Units == null)
+        {
+            controlSystem_Units = FindObjectOfType<ControlSystem_Units>();
+        }
+
+        controlSystem_Units.RegisterObject(this);
     }
 
     //——————————————————————————————Unity游戏引擎默认功能—————————————————————————————————————————————————————————————

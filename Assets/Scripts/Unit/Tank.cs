@@ -133,7 +133,7 @@ namespace Assets.Scripts.Unit
             else {
                 if (!IfTowardTarget(componentListOnTower[0]))
                 {
-                    TurnTower(agent.destination);
+                    TurnTower(agent.destination + agent.transform.forward);
                 }
 
                 
