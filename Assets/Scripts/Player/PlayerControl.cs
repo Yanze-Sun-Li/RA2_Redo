@@ -23,6 +23,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     protected  List<UnitControl> playerUnits;
 
+    public ControlSystem_Players controlSystem_Players;
+
     /*
      * ——————————————————————重要信息，玩家如何在出场时正确判断自己的部队——————————————————————————————————————————
      * 每一位PlayerControl都应该有一个独属于玩家的ID。在游戏开始的时候，会访问场上所有的单位，并根据玩家的ID将单位加入到对应玩家的阵营里。
@@ -424,6 +426,12 @@ public class PlayerControl : MonoBehaviour
 
     protected  void Start()
     {
+        if (controlSystem_Players == null)
+        {
+            controlSystem_Players = FindAnyObjectByType<ControlSystem_Players>();
+        }
+
+        controlSystem_Players.AddToPlayerList(this);
         mainCamera = Camera.main;
         if (playerUnits.Count == 0)
         {

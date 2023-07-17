@@ -86,6 +86,7 @@ public class Grid
 
 public class GridSystem : MonoBehaviour
 {
+    public ControlSystem_Players controlSystem_Players;
     public Grid[,] grids;
 
     public GameObject terrainParent;
@@ -95,6 +96,16 @@ public class GridSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (controlSystem_Players == null)
+        {
+            controlSystem_Players = FindAnyObjectByType<ControlSystem_Players>();
+        }
+
+        foreach (PlayerControl player in controlSystem_Players.players)
+        {
+            AddObjectToGrid(player);
+        }
+
         CalculateGrids();
     }
 
