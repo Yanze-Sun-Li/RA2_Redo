@@ -198,14 +198,14 @@ public class GridSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取指定网格周围的相邻游戏物体
+    /// 获取指定网格周围的相邻网格
     /// </summary>
     /// <param name="grid">指定的网格</param>
     /// <param name="range">搜索范围</param>
-    /// <returns>相邻游戏物体的列表</returns>
-    public List<GameObject> GetNeighboringObjects(Grid grid, int range)
+    /// <returns>相邻网格的列表</returns>
+    public List<Grid> GetNeighboringGrids(Grid grid, int range)
     {
-        List<GameObject> neighboringObjects = new List<GameObject>();
+        List<Grid> neighboringGrids = new List<Grid>();
 
         int rowIndex = grid.index_x;
         int colIndex = grid.index_y;
@@ -216,20 +216,42 @@ public class GridSystem : MonoBehaviour
         int startCol = Mathf.Max(0, colIndex - range);
         int endCol = Mathf.Min(grids.GetLength(1) - 1, colIndex + range);
 
-        // 遍历周围网格并收集物体
+        // 遍历周围网格并收集相邻网格
         for (int row = startRow; row <= endRow; row++)
         {
             for (int col = startCol; col <= endCol; col++)
             {
-                neighboringObjects.AddRange(grids[row, col].objects);
+                neighboringGrids.Add(grids[row, col]);
             }
+        }
+
+        return neighboringGrids;
+    }
+
+    /// <summary>
+    /// 获取指定网格周围的相邻游戏物体
+    /// </summary>
+    /// <param name="grid">指定的网格</param>
+    /// <param name="range">搜索范围</param>
+    /// <returns>相邻游戏物体的列表</returns>
+    public List<GameObject> GetNeighboringObjects(Grid grid, int range)
+    {
+        List<GameObject> neighboringObjects = new List<GameObject>();
+
+        List<Grid> neighboringGrids = GetNeighboringGrids(grid, range);
+
+        // 遍历相邻网格并收集物体
+        foreach (Grid neighboringGrid in neighboringGrids)
+        {
+            neighboringObjects.AddRange(neighboringGrid.objects);
         }
 
         return neighboringObjects;
     }
 
+
     /// <summary>
-    /// 在指定行和列的网格周围查找存在的其他网格物体
+    /// 寻找在相邻网格之中，距离在指定范围之内的其他物体。
     /// </summary>
     /// <param name="rowIndex">行坐标</param>
     /// <param name="colIndex">列坐标</param>
