@@ -23,7 +23,7 @@ namespace Assets.Scripts.Unit
 
         /// <summary>
         /// 旋转炮塔，以及一切被存放在炮塔上的物体。
-        /// 请注意，记得要将需要旋转的物体，托选进入上方的componentListOnTower中。
+        /// 请注意，记得要将需要旋转的物体，在unity引擎中通过鼠标拖选进上方的componentListOnTower中。
         /// </summary>
         protected void TurnTower(Vector3 target) {
             if (componentListOnTower.Count <= 0)

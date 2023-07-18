@@ -11,6 +11,7 @@ public class UnitControl : MonoBehaviour
     //—————————————————————————信息类————————————————————————————————
     protected NavMeshAgent agent;
 
+
     //—————————————————————————属性类————————————————————————————————
     public int id;
     public int playerID;
@@ -284,6 +285,42 @@ public class UnitControl : MonoBehaviour
         controlSystem_Units.RegisterObject(this);
     }
 
+    //——————————————————————————————网格定位系统———————————————————————————————————————————————————————————————————————————
+    protected Grid grid;
+
+    /// <summary>
+    /// 获取当前单位所在的网格。
+    /// </summary>
+    /// <returns>所在网格</returns>
+    public Grid GetGrid() { return grid; }
+
+    /// <summary>
+    /// 设置当前单位所在的网格。
+    /// </summary>
+    /// <param name="grid"></param>
+    public void SetGrid(Grid grid) { this.grid = grid; }
+
+    /// <summary>
+    /// 清除当前单位所在的网格信息。
+    /// </summary>
+    public void CleanGrid()
+    {
+        this.grid.RemoveObject(gameObject);
+        this.grid = null;
+    }
+
+    //判断单位是否移动过
+    protected Vector3 previousPosition; // 上一帧的位置
+    protected bool hasMoved() { 
+            if (previousPosition == transform.position)
+                   {
+                   return false;
+               }
+           else {
+                   return true;
+               }
+       }
+
     //——————————————————————————————Unity游戏引擎默认功能—————————————————————————————————————————————————————————————
 
     protected void Awake()
@@ -300,6 +337,14 @@ public class UnitControl : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
+
+        //用于定位，在上一帧是否移动过？
+        if (hasMoved()) { 
+        
+        }
+        previousPosition = transform.position;
+
+        //攻击逻辑
         if (attackSelectedTarget) {
             if (InAttackRange(enemyUnitTargetPosition))
             {

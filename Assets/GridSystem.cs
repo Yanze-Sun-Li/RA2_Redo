@@ -61,7 +61,7 @@ public class Grid
     }
 
     /// <summary>
-    /// 从网格中移除游戏物体
+    /// 从网格的物体列表中中移除游戏物体
     /// </summary>
     /// <param name="obj">要移除的游戏物体</param>
     public void RemoveObject(GameObject obj)
@@ -73,7 +73,7 @@ public class Grid
     }
 
     /// <summary>
-    /// 将游戏物体从当前网格移动到目标网格
+    /// 将游戏物体从当前网格的物体列表中删除，并移动到目标网格的移动列表。
     /// </summary>
     /// <param name="obj">要移动的游戏物体</param>
     /// <param name="targetGrid">目标网格</param>
@@ -183,6 +183,12 @@ public class GridSystem : MonoBehaviour
     /// <param name="obj">要添加的游戏物体</param>
     public void AddObjectToGrid(GameObject obj)
     {
+        UnitControl unitControl = obj.GetComponent<UnitControl>();
+
+        if (unitControl != null && unitControl.GetGrid() != null) {
+            unitControl.CleanGrid();
+        }
+
         foreach (Grid grid in grids)
         {
             if (grid.IsPositionInGrid(obj))
@@ -190,7 +196,8 @@ public class GridSystem : MonoBehaviour
                 // 检查物体是否已经存在于某个网格中
                 if (!grid.objects.Contains(obj))
                 {
-                    grid.MoveObjectToGrid(obj, grid);
+                    grid.AddObject(obj);
+                    unitControl.SetGrid(grid);
                 }
                 break;
             }
