@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Grid
@@ -96,17 +97,30 @@ public class GridSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CalculateGrids();
+
         if (controlSystem_Players == null)
         {
             controlSystem_Players = FindAnyObjectByType<ControlSystem_Players>();
+            Debug.Log("controlSystem_Players is null, find it in scene. "  + controlSystem_Players.name);
         }
 
-        foreach (PlayerControl player in controlSystem_Players.players)
+        foreach (PlayerController player in controlSystem_Players.players)
         {
-            AddObjectToGrid(player);
+
+            List<UnitControl> playerUnit = player.getPlayerUnits();
+            if (playerUnit == null)
+            {
+                Debug.Log(player.name + " do not have exist unit.");
+                continue;
+            }
+            foreach (UnitControl unit in playerUnit)
+            {
+                AddObjectToGrid(unit.gameObject);
+            }
         }
 
-        CalculateGrids();
+
     }
 
     // Update is called once per frame

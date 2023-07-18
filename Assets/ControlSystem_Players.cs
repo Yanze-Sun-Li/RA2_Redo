@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ControlSystem_Players : MonoBehaviour
 {
-    public List<PlayerControl> players;
+    public List<PlayerController> players;
     
 
 
@@ -20,7 +20,7 @@ public class ControlSystem_Players : MonoBehaviour
         
     }
 
-    public void AddToPlayerList(PlayerControl player)
+    public void AddToPlayerList(PlayerController player)
     {
         if (!players.Contains(player))
         {
@@ -28,7 +28,7 @@ public class ControlSystem_Players : MonoBehaviour
         }
     }
 
-    public void RemoveFromPlayerList(PlayerControl player)
+    public void RemoveFromPlayerList(PlayerController player)
     {
         if (players.Contains(player))
         {

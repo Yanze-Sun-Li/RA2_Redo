@@ -4,7 +4,7 @@ using UnityEngine;
 public class ControlSystem_Units : MonoBehaviour
 {
     List<UnitControl> units;
-    List<PlayerControl> players;
+    List<PlayerController> players;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +37,7 @@ public class ControlSystem_Units : MonoBehaviour
     /// <param name="unit">等待分配的单位</param>
     void AssignUnitToPlayer(UnitControl unit)
     {
-        foreach (PlayerControl player in players)
+        foreach (PlayerController player in players)
         {
             if (player.playerID == -1)
             {
@@ -58,11 +58,11 @@ public class ControlSystem_Units : MonoBehaviour
     void AssignExitUnitsToPlayer()
     {
         units = new List<UnitControl>(FindObjectsOfType<UnitControl>());
-        players = new List<PlayerControl>(FindObjectsOfType<PlayerControl>());
+        players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
 
         foreach (UnitControl unit in units)
         {
-            foreach (PlayerControl player in players)
+            foreach (PlayerController player in players)
             {
                 if (player.playerID == -1)
                 {
