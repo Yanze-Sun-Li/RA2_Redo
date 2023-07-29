@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -33,9 +34,9 @@ public class Grid
     /// </summary>
     /// <param name="gameObject">要检查的游戏物体</param>
     /// <returns>如果游戏物体在网格中，返回true；否则返回false</returns>
-    public bool IsPositionInGrid(GameObject gameObject)
+    public bool IsPositionInGrid(Vector3 _position)
     {
-        Vector3 position = gameObject.transform.position;
+        Vector3 position = _position;
         return position.x >= x1 && position.x <= x2 && position.z >= y1 && position.z <= y2;
     }
 
@@ -126,8 +127,67 @@ public class GridSystem : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        UpgradeGrids();
+
     }
+
+
+    //————————————————————————————
+    // Note：未取用的逻辑：
+    //     （未取用）功能实现的原理：
+    //     1.每当一个单位行动的时候，都会将自己所在网格周围所有的网格发送到 - Fixed待更新网格列表中。
+    //     2.帧读取所有的待更新网格
+    //     3.Fixed列表里更新网格数据
+    //____________________________
+    /// <summary>
+    /// 在Fixed帧中更新网格系统的每一个单位。
+    ///     UpgradeGrids方法需要遍历所有网格，对每个网格检查其周围相邻网格中的游戏物体。
+    ///     如果发现相邻网格中有距离足够近的游戏物体，则将它们添加到当前网格的游戏物体列表中。
+    ///     如果当前网格中的游戏物体移动到了其他网格，则需要将其从当前网格中移除，并添加到目标网格的游戏物体列表中。
+    /// </summary>
+    public void UpgradeGrids()
+    {
+        int rowCount = grids.GetLength(0);
+        int colCount = grids.GetLength(1);
+
+        // 遍历所有网格
+        for (int row = 0; row < rowCount; row++)
+        {
+            for (int col = 0; col < colCount; col++)
+            {
+                Grid currentGrid = grids[row, col];
+
+                List<GameObject> closeObjects = new List<GameObject>();
+                if (currentGrid.objects.Count > 0)
+                {
+                    closeObjects = GetCloseNeighboringObjects(row, col, currentGrid.objects[0], 1, 5f);
+                }
+
+                // 将距离足够近的游戏物体添加到当前网格的游戏物体列表中
+                foreach (GameObject closeObject in closeObjects)
+                {
+                    if (!currentGrid.objects.Contains(closeObject))
+                    {
+                        currentGrid.objects.Add(closeObject);
+                    }
+                }
+
+                // 如果当前网格中的游戏物体移动到了其他网格，则需要将其从当前网格中移除，并添加到目标网格的游戏物体列表中
+                for (int i = currentGrid.objects.Count - 1; i >= 0; i--)
+                {
+                    GameObject obj = currentGrid.objects[i];
+                    Grid targetGrid = FindGridByPosition(obj.transform.position);
+                    if (targetGrid != null && targetGrid != currentGrid)
+                    {
+                        currentGrid.RemoveObject(obj);
+                        targetGrid.AddObject(obj);
+                    }
+                }
+            }
+        }
+    }
+
+
 
     /// <summary>
     /// 计算网格系统，根据指定范围生成网格
@@ -191,7 +251,7 @@ public class GridSystem : MonoBehaviour
 
         foreach (Grid grid in grids)
         {
-            if (grid.IsPositionInGrid(obj))
+            if (grid.IsPositionInGrid(obj.transform.position))
             {
                 // 检查物体是否已经存在于某个网格中
                 if (!grid.objects.Contains(obj))
@@ -235,6 +295,8 @@ public class GridSystem : MonoBehaviour
         return neighboringGrids;
     }
 
+
+
     /// <summary>
     /// 获取指定网格周围的相邻游戏物体
     /// </summary>
@@ -255,6 +317,7 @@ public class GridSystem : MonoBehaviour
 
         return neighboringObjects;
     }
+
 
 
     /// <summary>
@@ -286,27 +349,61 @@ public class GridSystem : MonoBehaviour
         return closeObjects;
     }
 
-// 在Scene视图中绘制网格系统的边界
-private void OnDrawGizmos()
-{
-    if (grids != null)
+    // 在Scene视图中绘制网格系统的边界
+    private void OnDrawGizmos()
     {
-        foreach (Grid grid in grids)
+        if (grids != null)
         {
-            if (grid.objects.Count > 0)
+            foreach (Grid grid in grids)
             {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.blue;
-            }
+                if (grid.objects.Count > 0)
+                {
+                    Gizmos.color = Color.green;
+                }
+                else
+                {
+                    Gizmos.color = Color.blue;
+                }
 
-            Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y1), new Vector3(grid.x2, 0, grid.y1));
-            Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y1), new Vector3(grid.x2, 0, grid.y2));
-            Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y2), new Vector3(grid.x1, 0, grid.y2));
-            Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y2), new Vector3(grid.x1, 0, grid.y1));
+                Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y1), new Vector3(grid.x2, 0, grid.y1));
+                Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y1), new Vector3(grid.x2, 0, grid.y2));
+                Gizmos.DrawLine(new Vector3(grid.x2, 0, grid.y2), new Vector3(grid.x1, 0, grid.y2));
+                Gizmos.DrawLine(new Vector3(grid.x1, 0, grid.y2), new Vector3(grid.x1, 0, grid.y1));
+            }
         }
     }
-}
+
+    public Grid FindGridByIndex(int rowIndex, int colIndex)
+    {
+        int rowCount = grids.GetLength(0);
+        int colCount = grids.GetLength(1);
+
+        if (rowIndex >= 0 && rowIndex < rowCount && colIndex >= 0 && colIndex < colCount)
+        {
+            return grids[rowIndex, colIndex];
+        }
+
+        return null;
+    }
+
+    public Grid FindGridByPosition(Vector3 position)
+    {
+        int rowCount = grids.GetLength(0);
+        int colCount = grids.GetLength(1);
+
+        for (int row = 0; row < rowCount; row++)
+        {
+            for (int col = 0; col < colCount; col++)
+            {
+                Grid grid = grids[row, col];
+
+                if (grid.IsPositionInGrid(position))
+                {
+                    return grid;
+                }
+            }
+        }
+
+        return null;
+    }   
 }
